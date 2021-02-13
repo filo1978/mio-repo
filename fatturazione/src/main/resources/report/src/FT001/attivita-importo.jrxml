@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final utlizzo versione della libreria JasperReports6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="attivita" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2c48095-b4fe-4b90-acd6-c9840a472b6b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="fatturazione"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="ID_FATTURA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  descrizione, importo_netto
+FROM FATTURAZIONE.attivita
+WHERE  id_fattura = $P{ID_FATTURA}]]>
+	</queryString>
+	<field name="descrizione" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descrizione"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="attivita"/>
+	</field>
+	<field name="importo_netto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="importo_netto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="attivita"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="430" height="23" backcolor="rgba(222, 222, 222, 0.54509807)" uuid="d2be7722-0749-4884-9e0a-af81cbb947f1"/>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[ Attività]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="430" y="1" width="130" height="23" backcolor="rgba(222, 222, 222, 0.54509807)" uuid="bb7d3c9b-8b78-4c73-aea1-18a27247b0d8"/>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<text><![CDATA[Importo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="430" height="20" uuid="d3bd1c4a-bfb0-4745-a078-ae1f585f9af6"/>
+				<box padding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descrizione}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="130" height="20" uuid="446e731e-9b1a-4c67-9b0c-e1296fac8f85">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a2e0c4b6-a3a3-4501-953c-42b7cfcd6718"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{importo_netto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

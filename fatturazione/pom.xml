@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.8.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>it.spaziowiki</groupId>
+	<artifactId>fatturazione</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>fatturazione</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<!-- <maven.compiler.source>1.8</maven.compiler.source>
+    	<maven.compiler.target>1.8</maven.compiler.target>
+    	<project.build.java.target>1.8</project.build.java.target>  -->
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+        	<groupId>org.apache.tomcat.embed</groupId>
+        	<artifactId>tomcat-embed-jasper</artifactId>
+        	<scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>jstl</artifactId>
+	    </dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- conettore per DB locale: più nuovo 
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>-->
+		<!-- conettore per DB NAS: più vecchio -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.49</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		
+		<!-- questo mi dovrebbe servire per evitare di retsrartare l'applcaizione e evdere i cambiamenti nella jsp -->
+		 <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+		    <optional>true</optional>
+		 </dependency>
+		
+		<dependency>
+		  <groupId>com.github.darrachequesne</groupId>
+		  <artifactId>spring-data-jpa-datatables</artifactId>
+		  <version>5.0.0</version>
+		</dependency>
+		
+		<!-- validazione ...INIZIO -->
+	   <!-- <dependency>
+	        <groupId>javax.validation</groupId>
+	        <artifactId>validation-api</artifactId>
+	        <version>1.1.0.Final</version>
+	    </dependency> -->
+	    
+	    <dependency>
+		    <groupId>javax.el</groupId>
+		    <artifactId>javax.el-api</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
+	    
+	    <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-validator</artifactId>
+	        <version>5.4.3.Final</version>
+	    </dependency>
+		<!-- validazione ...FINE -->
+		
+		<!-- dipendenze per excel...INIZIO -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.17</version>
+		</dependency>
+		<dependency>
+		    <groupId>net.sourceforge.jexcelapi</groupId>
+		    <artifactId>jxl</artifactId>
+		    <version>2.6.12</version>
+		</dependency>
+		<!-- dipendenze per excel...FINE -->
+		
+		
+		<!-- Jasper -->
+		
+		<dependency>
+    		<groupId>com.lowagie</groupId>
+    		<artifactId>itext</artifactId>
+    		<version>2.1.7</version>
+    		<exclusions>
+    			<exclusion>
+    				<artifactId>bcprov-jdk14</artifactId>
+    				<groupId>bouncycastle</groupId>
+    			</exclusion>
+    			<exclusion>
+    				<artifactId>bcmail-jdk14</artifactId>
+    				<groupId>bouncycastle</groupId>
+    			</exclusion>
+    			<exclusion>
+    				<artifactId>bctsp-jdk14</artifactId>
+    				<groupId>org.bouncycastle</groupId>
+    			</exclusion>
+    		</exclusions>
+		 </dependency> 
+		
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports-fonts -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports-fonts</artifactId>
+		    <version>6.0.0</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.4.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.lowagie</groupId>
+                    <artifactId>itext</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.olap4j</groupId>
+                      <artifactId>olap4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+				<artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>   
+		
+	</dependencies>
+
+	<!-- <build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build> -->
+	
+	<build>
+        <finalName>fatturazione</finalName>
+        <plugins>
+
+            <!-- crea war tomcat-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+            
+            <!-- crea war eseguibile
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+			        <execution>
+			            <configuration>
+			                <mainClass>it.spaziowiki.fatturazione.FatturazioneApplication</mainClass>
+			                <complianceLevel>${java.version}</complianceLevel>
+			                <addResources>true</addResources>
+					    	<maven.compiler.source>${java.version}</maven.compiler.source>
+					    	<maven.compiler.target>${java.version}</maven.compiler.target>
+        					<release>${java.version}</release>
+        					<project.build.java.target>${java.version}</project.build.java.target> 
+			            </configuration>
+			            <goals>
+		                   <goal>repackage</goal>
+		                </goals>
+			        </execution>
+			    </executions>
+			</plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

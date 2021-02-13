@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final utlizzo versione della libreria JasperReports6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="module" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="239fef14-3f08-4595-a4e1-6e3a24f6260b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="fatturazione-nas"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="ID_FATTURA" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  F.OGGETTO,F.NUMERO_FATTURA, C.DENOMINAZIONE, C.PIVA,
+(select count(*) from FATTURAZIONE.attivita a where a.id_fattura= F.ID_FATTURA and a.importo_netto is not null) as num_attivita_imponibile,
+CONCAT(C.CAP,' ',COM.descrizione,' (',PROV.sigla,')') AS DESCRIZIONE_CAP_COMUNE_PROVINCIA , ID_BOLLO,
+C.INDIRIZZO, DATE_FORMAT(F.DT_FATTURA,'%d/%m/%Y	') AS DT_FATTURA, ROUND(F.IMPORTO_NETTO,2) AS IMPORTO_NETTO, truncate(F.IVA,0) as iva_fattura,ROUND(((F.IMPORTO_NETTO/100)*F.IVA),2) as IMPORTO_IVA,ROUND((F.IMPORTO_NETTO+((F.IMPORTO_NETTO/100)*F.IVA)),2) AS IMPORTO_LORDO
+FROM FATTURAZIONE.fattura  F, FATTURAZIONE.cliente C, FATTURAZIONE.c_comune COM, FATTURAZIONE.c_provincia PROV
+WHERE F.ID_FATTURA=$P{ID_FATTURA}  AND
+C.ID_CLIENTE=F.ID_CLIENTE AND
+C.COD_PROV=COM.COD_PROV AND
+C.COD_COM=COM.COD_COM AND
+COM.COD_PROV=PROV.COD_PROV]]>
+	</queryString>
+	<field name="OGGETTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OGGETTO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fattura"/>
+	</field>
+	<field name="NUMERO_FATTURA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_FATTURA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fattura"/>
+	</field>
+	<field name="DENOMINAZIONE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DENOMINAZIONE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="PIVA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PIVA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="num_attivita_imponibile" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="num_attivita_imponibile"/>
+	</field>
+	<field name="DESCRIZIONE_CAP_COMUNE_PROVINCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESCRIZIONE_CAP_COMUNE_PROVINCIA"/>
+	</field>
+	<field name="ID_BOLLO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ID_BOLLO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fattura"/>
+	</field>
+	<field name="INDIRIZZO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INDIRIZZO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="DT_FATTURA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DT_FATTURA"/>
+	</field>
+	<field name="IMPORTO_NETTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="IMPORTO_NETTO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fattura"/>
+	</field>
+	<field name="iva_fattura" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="iva_fattura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fattura"/>
+	</field>
+	<field name="IMPORTO_IVA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="IMPORTO_IVA"/>
+	</field>
+	<field name="IMPORTO_LORDO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="IMPORTO_LORDO"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="12" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="154" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="20" uuid="a4fd373e-1a93-40b4-92c5-7ea25188ce66"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Spett. le]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="20" width="210" height="20" uuid="75481173-5e3d-4115-ba7f-8efd64a4b7b2"/>
+				<textElement>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DENOMINAZIONE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="120" height="20" uuid="8cd947f1-5557-4253-80b1-de45831afc71"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Codice Fiscale/P.IVA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="80" width="120" height="20" uuid="a700d7f3-96c3-427a-a07a-756e926d0ad7"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PIVA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="260" height="20" uuid="6ff36321-e047-401b-9295-99a42984f257"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INDIRIZZO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="90" width="180" height="20" uuid="8222b590-fa28-4384-9206-f3644e7b2738"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Fattura]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="406" y="110" width="160" height="20" uuid="99b51fcc-62b3-49f2-bd0b-b331895b1f2a"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="388" y="130" width="86" height="20" uuid="b6f83457-bf06-4bc0-b8b3-11b35e74e9d7"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[emessa in data]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="475" y="130" width="80" height="20" uuid="b98ab337-466a-4ff3-a1b7-456961e2195a"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DT_FATTURA}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="365" y="0" width="190" height="50" uuid="d3c64388-1cb2-4bb7-869c-852a2fbbe039"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"SP_logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="60" width="240" height="20" uuid="3957fe19-9b42-4c38-9bd4-47ebe04df92e"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIZIONE_CAP_COMUNE_PROVINCIA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="110" width="50" height="20" uuid="053be1c0-1400-4695-811f-99fa6cd54637"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[n.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="23" width="565" height="20" uuid="d73160af-1967-4828-9a1e-7c0cb5e92041"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OGGETTO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="-17" y="40" width="590" height="20" uuid="e1d52065-8611-4255-bb9e-ddb3807efd69">
+					<printWhenExpression><![CDATA[$F{num_attivita_imponibile}.compareTo(new Long(0))==0]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="ID_FATTURA">
+					<subreportParameterExpression><![CDATA[$P{ID_FATTURA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"attivita.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="-17" y="60" width="590" height="20" uuid="d1fa81c3-9810-4c22-a131-d10c8ad87bd8">
+					<printWhenExpression><![CDATA[$F{num_attivita_imponibile}.compareTo(new Long(0))!=0]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="ID_FATTURA">
+					<subreportParameterExpression><![CDATA[$P{ID_FATTURA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"attivita-importo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="236">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="8" width="110" height="20" uuid="fb829dda-8d53-442f-a422-f3b04381ebc3"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Imponibile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="28" width="50" height="20" uuid="fce1442e-c757-4943-ae22-a95fe08eb211"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Contributo]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="50" y="28" width="20" height="20" uuid="988a7d53-769f-4be1-bc80-1ae691bcf237"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{iva_fattura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="70" y="28" width="30" height="20" uuid="4f81f3d2-02f7-4fe7-931f-5dc731ef1a5d"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="48" width="110" height="20" uuid="04846180-5b1f-4b32-a054-e91cfd58fcdb"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Totale da pagare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="-10" y="100" width="555" height="70" uuid="bb9aa3e8-c658-4450-8869-d7e36bfd63b7"/>
+				<textElement textAlignment="Justified">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Operazione effettuata da soggetto appartenente a regime fiscale di vantaggio ai sensi dell'art.1, commi da 54 a 89, L.n. 190/2014 e successive modificazioni.
+Prestazione non soggetta a ritenuta d'acconto secondo quanto previsto dal punto 5.2 del provvedimento Agenzia Entrate del 22.12.2011 n. 185820.]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="20" y="190" width="100" height="20" uuid="98ed9a39-2583-4b20-90b5-63a5bb22f18c"/>
+				<textFieldExpression><![CDATA[$F{ID_BOLLO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="230" y="48" width="40" height="20" uuid="abe91b2a-e421-4a1a-b7c0-56307e10a0ad"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[euro]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="270" y="48" width="100" height="20" uuid="1d8ef767-4191-4219-a165-32b7ea293f20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTO_LORDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="270" y="29" width="100" height="19" uuid="cec34d04-ae6b-4612-9ee1-ca2534371b24"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTO_IVA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="230" y="29" width="40" height="19" uuid="d9f1c3b0-e8af-4440-b53c-b7c81e38506f"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[euro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="230" y="8" width="40" height="21" uuid="dc8d73ee-da42-42a7-a680-9ba0b2f2bad7"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[euro]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="270" y="8" width="100" height="21" uuid="6bf21413-7054-4d48-b3d1-6370036eea95"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTO_NETTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="103" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="574" height="79" forecolor="rgba(107, 107, 107, 0.46666667)" uuid="923f968b-1765-42a7-b828-10b77eed68c8"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Silvia Pellino  e-mail: silviapellino@spaziowiki.com tel +39 3462223062 C.F. PLLSLV79R45F839E 
+via Piangipane 47 44121 Ferrara
+P. IVA 01992290385
+Poste Italiane  IBAN: IT24W0760113000000071563548 intestato a Silvia Pellino
+Termini di pagamento: bonifico 30gg f.m. ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
