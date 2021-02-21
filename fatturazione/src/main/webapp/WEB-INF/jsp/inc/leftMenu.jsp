@@ -66,6 +66,32 @@
           <span>Nuova Fattura</span></a>
       </li>
       
+      
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Prestazioni informali
+      </div>
+
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="<c:url value='/lista-prestazioni' />">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Lista Prestazioni</span></a>
+      </li>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="<c:url value='/nuova-fattura?tipoFattura=FT003' />">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Nuova Prestazione</span></a>
+      </li>
+      
+      
        <!-- Divider -->
       <hr class="sidebar-divider">
 

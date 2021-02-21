@@ -157,13 +157,27 @@
     		$("#dtFatturaDiv").hide();
          	$("#idBolloDiv").hide();
          	$("#flagPagatoDiv").hide();
+         	$("#ivaDiv").show();
+         	$("#importoLordoDiv").show();
          	$("#dtFattura").prop('required',false);
          	$("#idBollo").prop('required',false);
-         }else{
+         }else if(codTipo=='FT003'){
+     		//Se black
+     		$("#dtFatturaDiv").show();
+          	$("#idBolloDiv").hide();
+          	$("#codTipoDiv").hide();
+          	$("#flagPagatoDiv").show();
+          	$("#ivaDiv").hide();
+          	$("#importoLordoDiv").hide();
+          	$("#dtFattura").prop('required',true);
+          	$("#idBollo").prop('required',false);
+          }else{
         	 //Se fattura
         	 $("#dtFatturaDiv").show();
         	 $("#idBolloDiv").show();
         	 $("#flagPagatoDiv").show();
+        	 $("#ivaDiv").show();
+        	 $("#importoLordoDiv").show();
         	 $("#dtFattura").prop('required',true);
         	 $("#idBollo").prop('required',true);
          }
@@ -230,7 +244,7 @@
 				 </div>
 				
 				 <c:if test="${!isInsert && !fattura.tipoFattura}">
-				 	<div class="form-group">
+				 	<div class="form-group" id="codTipoDiv">
 				 		<form:label path = "codTipo">Tipo</form:label>
 					  	<form:select required="true" class="form-control" path="codTipo">
 						    <form:options items="${listaTipoFattura}"  itemValue="cod" itemLabel="descrizione"/>
@@ -268,13 +282,13 @@
 				    <form:errors path="importoNetto" cssClass="error forceInline"/>
 				  </div>
 				  
-				   <div class="form-group">
+				   <div class="form-group" id="ivaDiv">
 				    <form:label path="iva">Iva</form:label>
 				    <form:input path="iva" type="text" class="form-control percentuale" id="iva" aria-describedby="ivaHelp" placeholder="Iva" required="true"/>
 				    <form:errors path="iva" cssClass="error forceInline"/>
 				  </div>
 				  
-				  <div class="form-group">
+				  <div class="form-group" id="importoLordoDiv">
 				    <form:label path="importoLordo">Importo lordo</form:label>
 				    <form:input path="importoLordo" type="text" class="form-control euro" id="importoLordo" aria-describedby="importoLordoHelp" placeholder="" disabled="true"/>
 				  </div>
@@ -313,18 +327,9 @@
 						</a>
 				  	  </c:if>
 				  	  
-				  	 
-				  
-				  	<c:if test="${fattura.tipoFattura}">
-	 					<a href="<c:url value='/lista-fatture' />"  />
-						  <button type="button" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i>&nbsp;Lista fatture</button>&nbsp;
-						</a> 
-					</c:if> 
-					<c:if test="${!fattura.tipoFattura}">
-	 					<a href="<c:url value='/lista-preventivi' />"  />
-						  <button type="button" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i>&nbsp;Lista preventivi</button>&nbsp;
-						</a> 
-					</c:if> 
+				  	 <a href="<c:url value='${indietroLink}'/>"  />
+					 	<button type="button" class="btn btn-secondary"><i class="far fa-arrow-alt-circle-left"></i>&nbsp;${indietroButton}</button>&nbsp;
+					 </a>  
 				</div>
 
 				  

@@ -38,4 +38,6 @@ public interface IFatturaService {
 	List<ClienteFatturaAnnoForm> getClienteFatturaAnno(Integer anno);
 
 	FatturaAnnoFormWrapper getFatturaAnno();
+
+	List<FatturaForm> getAllFattureBlack();
 }

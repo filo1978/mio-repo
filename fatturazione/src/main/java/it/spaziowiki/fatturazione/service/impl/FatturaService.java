@@ -103,7 +103,8 @@ public class FatturaService implements IFatturaService {
 		fattura.setIva(fatturaForm.getIva());
 		fattura.setOggetto(fatturaForm.getOggetto());
 		fattura.setStatoFattura(getStatoFattura(fatturaForm));
-		fattura.setNumeroFattura(getNumeroFattura(cliente,fattura));
+		if(fatturaForm.isTipoFattura())
+			fattura.setNumeroFattura(getNumeroFattura(cliente,fattura));
 		fatturaRepository.save(fattura);
 		return fattura.getIdFattura();
 	}
@@ -274,7 +275,7 @@ public class FatturaService implements IFatturaService {
 	@Override
 	public FatturaAnnoFormWrapper getFatturaAnno(){
 		List<FatturaAnnoForm> toRet = new ArrayList<FatturaAnnoForm>();
-		List<Object[]>l= fatturaRepository.getTotaleFattureAnnoProjection();
+		List<Object[]>l= fatturaRepository.getTotaleFattureAnnoProjection(TipoFatturaEnum.FATTURA.getCod());
 		for(Object[] o: l){
 			FatturaAnnoForm fatturaAnnoForm = new FatturaAnnoForm((BigDecimal) o[0], (Integer) o[1]);
 			toRet.add(fatturaAnnoForm);
@@ -315,7 +316,7 @@ public class FatturaService implements IFatturaService {
 	
 	@Override
 	public List<ImportoMeseForm> getImportoMese(Integer anno){
-		List<Object[]>l= fatturaRepository.getFattureAnnoMeseProjection(anno);
+		List<Object[]>l= fatturaRepository.getFattureAnnoMeseProjection(anno,TipoFatturaEnum.FATTURA.getCod());
 		List<ImportoMeseForm> toRet = new ArrayList<ImportoMeseForm>();
 		for(Object[] o: l){
 			ImportoMeseForm importoMeseForm = new ImportoMeseForm();
@@ -350,7 +351,7 @@ public class FatturaService implements IFatturaService {
 	
 	@Override
 	public List<ClienteFatturaAnnoForm> getClienteFatturaAnno(Integer anno){
-		List<Object[]>l= fatturaRepository.getFattureAnnoClienteProjection(anno);
+		List<Object[]>l= fatturaRepository.getFattureAnnoClienteProjection(anno,TipoFatturaEnum.FATTURA.getCod());
 		List<ClienteFatturaAnnoForm> toRet = new ArrayList<ClienteFatturaAnnoForm>();
 		for(Object[] o: l){
 			ClienteFatturaAnnoForm clienteFatturaAnnoForm = new ClienteFatturaAnnoForm();
@@ -407,12 +408,19 @@ public class FatturaService implements IFatturaService {
 	@Override
 	public List<PairDto> getAllAnnoFatture() {
 		List<PairDto> l = new ArrayList<PairDto>();
-		List<Integer> listAnni=fatturaRepository.getAllAnnoFatture();
+		List<Integer> listAnni=fatturaRepository.getAllAnnoFatture(TipoFatturaEnum.FATTURA.getCod());
 		for(Integer anno:listAnni) {
 			PairDto pairDto = new PairDto(""+anno.intValue(), ""+anno.intValue());
 			l.add(pairDto);
 		}
 		return l;
+	}
+
+
+
+	@Override
+	public List<FatturaForm> getAllFattureBlack() {
+		return getAllFattureByTipo(TipoFatturaEnum.BLACK.getCod());
 	}
 
 }

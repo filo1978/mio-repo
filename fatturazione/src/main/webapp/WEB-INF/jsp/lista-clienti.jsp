@@ -13,7 +13,7 @@ $(document).ready( function () {
 	 var table = $('#listaClientiTable').DataTable({
 			"sAjaxSource": "<c:url value='/lista-all-clienti' />",
 			"sAjaxDataProp": "",
-			"order": [[ 1, "asc" ]],
+			"order": [[ 0, "asc" ]],
 			"aoColumns": [
 				 { "sTitle" : "Denominazione",
 			        "mData" : "denominazione",

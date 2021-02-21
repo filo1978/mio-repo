@@ -11,7 +11,7 @@
 
 $(document).ready( function () {
 	 var table = $('#listaFattureTable').DataTable({
-		 	"sAjaxSource": "<c:url value='/lista-all-fatture' />",
+		 	"sAjaxSource": "<c:url value='/lista-all-fatture-black' />",
 			"sAjaxDataProp": "",
 			"order": [[0, "desc"]],
 			"aoColumns": [
@@ -19,28 +19,16 @@ $(document).ready( function () {
 			        "mData" : "idFattura",
 			        "visible": false
 			       },
-				{ "sTitle" : "N. Fattura",
-			        "mData" : "numeroFattura",
-			        "autoWidth": true
-			       },
 				 { "sTitle" : "Cliente",
 			        "mData" : "denominazioneCliente",
 			        "autoWidth": true
 			       },
-			       { "sTitle" : "Data fattura",
+			       { "sTitle" : "Data prestazione",
 				        "mData" : "dtFattura",
 				        "autoWidth": true
 				       },
-			       { "sTitle" : "IVA",
-				        "mData" : "iva",
-				        "autoWidth": true
-				       },
-			       { "sTitle" : "Importo Netto",
+			       { "sTitle" : "Importo",
 				        "mData" : "importoNetto",
-				        "autoWidth": true
-				       },
-			       { "sTitle" : "Importo Lordo",
-				        "mData" : "importoLordo",
 				        "autoWidth": true
 				       },
 				       { "sTitle" : "Stato",
@@ -116,7 +104,7 @@ function dettaglioFattura(item) {
           <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Lista fatture</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Lista prestazioni</h6>
                 </div>
                 <div class="card-body">
 					<div class="form-group" style="width: 100%">
@@ -126,12 +114,12 @@ function dettaglioFattura(item) {
 					</div>
 					<div class="form-group" style="width: 100%;text-align: center;">
 							
-							<a href="<c:url value='/nuova-fattura?tipoFattura=FT001' />" >
-							  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-pencil-alt"></i> Nuova fattura</button>
+							<a href="<c:url value='/nuova-fattura?tipoFattura=FT003' />" >
+							  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-pencil-alt"></i> Nuova prestazione</button>
 							</a>
 							&nbsp;
-							<a href="<c:url value='/scarica-lista-fatture-excel' />" >
-							  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-download"></i> Scarica lista fatture</button>
+							<a href="<c:url value='/scarica-lista-prestazioni-excel' />" >
+							  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-download"></i> Scarica lista prestazioni</button>
 							</a>
 						
 					</div>

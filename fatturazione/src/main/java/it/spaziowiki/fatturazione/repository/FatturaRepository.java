@@ -58,30 +58,30 @@ public interface FatturaRepository extends JpaRepository<Fattura, Integer> {
 	
 	@Query(value = "SELECT sum(importo_netto) as importo, month(dt_fattura) as mese "
 			+ "FROM fattura "
-			+ "where stato='ST01' and year(dt_fattura)= :anno "
+			+ "where stato='ST01' and year(dt_fattura)= :anno and tipo= :tipo "
 			+ "group by month(dt_fattura)"
 			+ "order by  mese asc ", nativeQuery = true)
-	List<Object[]> getFattureAnnoMeseProjection(@Param("anno") Integer anno);
+	List<Object[]> getFattureAnnoMeseProjection(@Param("anno") Integer anno,@Param("tipo") String tipo);
 	
 	@Query(value = "select sum(f.importo_netto) as importo, c.denominazione "
 			+ "from fattura f, cliente c "
-			+ "where c.id_cliente=f.id_cliente and year(f.dt_fattura)= :anno and f.stato='ST01' "
+			+ "where c.id_cliente=f.id_cliente and year(f.dt_fattura)= :anno and f.stato='ST01' and tipo= :tipo "
 			+ "group by c.denominazione "
 			+ "order by importo asc ", nativeQuery = true)
-	List<Object[]> getFattureAnnoClienteProjection(@Param("anno") Integer anno);
+	List<Object[]> getFattureAnnoClienteProjection(@Param("anno") Integer anno,@Param("tipo") String tipo);
 	
 	@Query(value = "select sum(importo_netto) as importo, year(dt_fattura) as anno "
 			+ "from fattura "
-			+ "where stato='ST01' "
+			+ "where stato='ST01' and tipo= :tipo "
 			+ "group by anno "
 			+ "order by anno asc ", nativeQuery = true)
-	List<Object[]> getTotaleFattureAnnoProjection();
+	List<Object[]> getTotaleFattureAnnoProjection(@Param("tipo") String tipo);
 	
 	
 	@Query(value = "select year(dt_fattura) as anno "
 			+ "from fattura "
-			+ "where stato='ST01' "
+			+ "where stato='ST01' and tipo= :tipo "
 			+ "group by anno "
 			+ "order by anno desc ", nativeQuery = true)
-	List<Integer> getAllAnnoFatture();
+	List<Integer> getAllAnnoFatture(@Param("tipo") String tipo);
 }

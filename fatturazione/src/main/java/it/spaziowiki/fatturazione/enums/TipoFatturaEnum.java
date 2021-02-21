@@ -3,7 +3,8 @@ package it.spaziowiki.fatturazione.enums;
 public enum TipoFatturaEnum {
 
 	FATTURA("FT001"),
-	PREVENTIVO("FT002");
+	PREVENTIVO("FT002"),
+	BLACK("FT003");
 	
 	private TipoFatturaEnum(String cod) {
 		this.cod = cod;

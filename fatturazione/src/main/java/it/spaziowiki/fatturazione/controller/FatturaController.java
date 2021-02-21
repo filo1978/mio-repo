@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -65,12 +66,22 @@ public class FatturaController extends SmartAbstractController{
 		return new ModelAndView("lista-fatture");
 	}
 	
+	@RequestMapping(value = "/lista-prestazioni", method = RequestMethod.GET)
+	public ModelAndView listaBlack() {
+		return new ModelAndView("lista-black");
+	}
+	
 	@RequestMapping(value = "/scarica-lista-fatture-excel", method = RequestMethod.GET)
 	public ModelAndView scaricaListaFattureExcel() {
 		List<FatturaForm> l= fatturaService.getAllFatture();
 		return new ModelAndView("listaFattureExcelView", "listaFatture", l);
 	}
 	
+	@RequestMapping(value = "/scarica-lista-prestazioni-excel", method = RequestMethod.GET)
+	public ModelAndView scaricaListaBlackExcel() {
+		List<FatturaForm> l= fatturaService.getAllFattureBlack();
+		return new ModelAndView("listaFattureExcelView", "listaFatture", l);
+	}
 	
 	@RequestMapping(value = "/lista-preventivi", method = RequestMethod.GET)
 	public ModelAndView listaPreventivi() {
@@ -102,10 +113,18 @@ public class FatturaController extends SmartAbstractController{
 	public ModelAndView nuovaFattura(@RequestParam(value = "tipoFattura" , required = true) String tipoFattura) {
 		FatturaForm fatturaForm=new FatturaForm();
 		fatturaForm.setCodTipo(tipoFattura);
-		fatturaForm.setIva(IVA_DEFAULT);
+		fatturaForm.setIva(getIva(tipoFattura));
 		return getNuovaFatturaModel(fatturaForm);
 	}
 	
+	private BigDecimal getIva(String tipoFattura) {
+		if(tipoFattura.equals(TipoFatturaEnum.BLACK.getCod())) {
+			return new BigDecimal(0);
+		}else {
+			return IVA_DEFAULT;
+		}
+	}
+
 	@RequestMapping(value = "/duplica-fattura", method = RequestMethod.GET)
 	public ModelAndView duplicaFattura() {
 		Integer idFattura=getFatturaFormFromSession().getIdFattura();
@@ -130,10 +149,13 @@ public class FatturaController extends SmartAbstractController{
 	public ModelAndView delete(FatturaForm fatturaForm) {
 		try {
 			fatturaService.delete(fatturaForm);
-			String page="lista-fatture";
-			if(!fatturaForm.isTipoFattura())
-				page="lista-preventivi";
-			return new ModelAndView(page);
+			if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.BLACK.getCod())) {
+				return new ModelAndView("lista-black");
+			}else if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.PREVENTIVO.getCod())) {
+				return new ModelAndView("lista-preventivi");
+			}else{
+				return new ModelAndView("lista-fatture");
+			}
 		} catch (FatturaDeleteException e) {
 			ModelAndView m=getNuovaFatturaModel(fatturaForm);
 			m.addObject(ERROR, e.getMessage());
@@ -183,11 +205,29 @@ public class FatturaController extends SmartAbstractController{
 		ModelAndView m =  getFatturaModel();
 		FatturaForm fatturaForm=fatturaService.select(idFattura);
 		m.addObject("fattura", fatturaForm);
-		m.addObject("titoloPagina", getTitoloDettaglioPagina(fatturaForm));
 		m.addObject("isInsert", false);
+		setValoriTipo(m,fatturaForm.getCodTipo());
 		return m;
 	}
 	
+	private void setValoriTipo(ModelAndView m,String codTipo) {
+		if(codTipo.equals(TipoFatturaEnum.FATTURA.getCod())) {
+			m.addObject("indietroButton", "Lista fatture");
+			m.addObject("indietroLink", "/lista-fatture");
+			m.addObject("titoloPagina", "Dettaglio fattura");
+		}else if(codTipo.equals(TipoFatturaEnum.BLACK.getCod())) {
+			m.addObject("indietroButton", "Lista prestazioni");
+			m.addObject("indietroLink", "/lista-prestazioni");
+			m.addObject("titoloPagina", "Dettaglio prestazione");
+		}else if(codTipo.equals(TipoFatturaEnum.PREVENTIVO.getCod())) {
+			m.addObject("indietroButton", "Lista preventivi");
+			m.addObject("indietroLink", "/lista-preventivi");
+			m.addObject("titoloPagina", "Dettaglio preventivo");
+		}else {
+			throw new RuntimeException("Errore: non definito il tipo fattura="+codTipo);	
+		}
+	}
+
 	private ModelAndView getNuovaFatturaModel(FatturaForm fatturaForm){
 		boolean isInsert=fatturaForm.getIdFattura()==null;
 		ModelAndView m =  getFatturaModel();
@@ -195,22 +235,15 @@ public class FatturaController extends SmartAbstractController{
 		String titoloPagina="";
 		if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.FATTURA.getCod())){
 			titoloPagina="Nuova fattura";
+		}else if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.BLACK.getCod())){
+			titoloPagina="Nuova prestazione";
 		}else{
 			titoloPagina="Nuovo preventivo";
 		}
 		m.addObject("titoloPagina", titoloPagina);
 		m.addObject("isInsert", isInsert);
+		setValoriTipo(m,fatturaForm.getCodTipo());
 		return m;
-	}
-	
-	private String getTitoloDettaglioPagina(FatturaForm fatturaForm){
-		String titoloPagina="";
-		if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.FATTURA.getCod())){
-			titoloPagina="Dettaglio fattura";
-		}else{
-			titoloPagina="Dettaglio preventivo";
-		}
-		return titoloPagina;
 	}
 	
 	private ModelAndView getFatturaModel(){

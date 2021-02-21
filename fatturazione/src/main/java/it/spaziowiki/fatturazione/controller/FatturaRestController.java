@@ -1,7 +1,6 @@
 package it.spaziowiki.fatturazione.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import it.spaziowiki.fatturazione.enums.TipoFatturaEnum;
 import it.spaziowiki.fatturazione.form.ClienteFatturaAnnoForm;
@@ -86,6 +84,11 @@ public class FatturaRestController {
 	@RequestMapping(value = "/lista-all-fatture", method = RequestMethod.GET)
 	public List<FatturaForm> getAllFatture(){
 		return fatturaService.getAllFatture();
+	}
+	
+	@RequestMapping(value = "/lista-all-fatture-black", method = RequestMethod.GET)
+	public List<FatturaForm> getAllFattureBlack(){
+		return fatturaService.getAllFattureBlack();
 	}
 	
 	@RequestMapping(value = "/lista-all-preventivi", method = RequestMethod.GET)

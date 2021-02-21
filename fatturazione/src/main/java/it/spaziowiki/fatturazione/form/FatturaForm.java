@@ -1,6 +1,7 @@
 package it.spaziowiki.fatturazione.form;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
