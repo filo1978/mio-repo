@@ -81,6 +81,11 @@ public class FatturaRestController {
 		return fatturaService.getAllFattureCliente(getClienteFromFromSession().getIdCliente(),TipoFatturaEnum.PREVENTIVO.getCod());
 	}
 	
+	@RequestMapping(value = "/lista-all-prestazioni-cliente", method = RequestMethod.GET)
+	public List<FatturaForm> getAllPrestazioniCliente(){
+		return fatturaService.getAllFattureCliente(getClienteFromFromSession().getIdCliente(),TipoFatturaEnum.BLACK.getCod());
+	}
+	
 	@RequestMapping(value = "/lista-all-fatture", method = RequestMethod.GET)
 	public List<FatturaForm> getAllFatture(){
 		return fatturaService.getAllFatture();

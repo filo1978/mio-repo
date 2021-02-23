@@ -242,6 +242,8 @@
               <c:if test="${cliente.idCliente!=null}">
               	<%@ include file="inc/listaFattureCliente.jsp" %>
               	
+              	<%@ include file="inc/listaBlackCliente.jsp" %>
+              	
               	<%@ include file="inc/listaPreventiviCliente.jsp" %>
               </c:if>
 
