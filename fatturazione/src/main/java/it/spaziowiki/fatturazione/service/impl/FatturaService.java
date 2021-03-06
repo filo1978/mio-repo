@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -81,6 +82,9 @@ public class FatturaService implements IFatturaService {
 	@Autowired
 	private BozzaFormFactory bozzaFormFactory;
 	
+	@Value("${iva_default}")
+	private BigDecimal ivaDefault;
+	
 	@Override
 	public List<FatturaForm> getAllFattureCliente(Integer idCliente,String codTipoFattura){
 		TipoFattura tipoFattura = new TipoFattura();
@@ -118,6 +122,10 @@ public class FatturaService implements IFatturaService {
 		if(StringUtils.hasText(fatturaForm.getCodMese())) {
 			CMese mese= meseRepository.findById(fatturaForm.getCodMese()).get();
 			fattura.setMese(mese);
+		}
+		if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.BOZZA.getCod())) {
+			fattura.setIva(ivaDefault);
+			fattura.setImportoNetto(new BigDecimal(0));
 		}
 		fatturaRepository.save(fattura);
 		return fattura.getIdFattura();
@@ -447,6 +455,16 @@ public class FatturaService implements IFatturaService {
 	@Override
 	public List<FatturaForm> getAllFattureBlack() {
 		return getAllFattureByTipo(TipoFatturaEnum.BLACK.getCod());
+	}
+
+
+
+	@Override
+	public List<BozzaForm> getAllBozzeCliente(Integer idCliente) {
+		TipoFattura tipoFattura = new TipoFattura();
+		tipoFattura.setCod(TipoFatturaEnum.BOZZA.getCod());
+		List<Fattura> l= fatturaRepository.findByClienteIdClienteAndTipoFattura(idCliente,tipoFattura);
+		return bozzaFormFactory.getList(l);
 	}
 
 }

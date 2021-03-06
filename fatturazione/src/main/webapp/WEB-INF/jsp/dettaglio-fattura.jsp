@@ -14,6 +14,40 @@
     	 gestisciDatiFattura( $('#codTipo').val());
     	 
           
+    	 $('#codTipo').on('change', function() {
+          	 var codTipoSelezionato = $(this).val(); 
+             console.log("codTipoSelezionato="+codTipoSelezionato);
+             gestisciDatiFattura(codTipoSelezionato);
+             //Perchè gli do sempre la possibilità di tornare in dietro in stato bozza
+             $("#codTipoDiv").show();
+             if(codTipoSelezionato=='FT001'){
+        		 
+            	 $.ajax({
+     			    
+     		        type: 'GET',
+     		        contentType: "application/json",
+     		        url: "<c:url value='/get-totale-attivita'/>",
+     		       // data : { sezione : sezioneToolTip,codFase:fase},
+     		        success: function(data){
+     		        	
+     		        	var importoNettoFattura=$("#importoNetto").autoNumeric("get");
+     		        	console.log("importoNettoFattura="+importoNettoFattura);
+     		        	$("#importoNetto").val(data.totaleAttivita);
+     		        	initNumber();
+     		        	console.log("data.toCheck="+data.toCheck);
+     		        	console.log("data.totaleAttivita="+data.totaleAttivita);
+     		        	calcolaImportoLordo();
+     		        	
+     		        },
+     		        error:function(){
+     			        
+     		        }
+     			});
+            	 
+            	 
+             }
+     	 });
+    	 
     	 $('#stampa-fattura').click(function(e) {
     		 e.preventDefault();
     		 var urlStampa =$(this).attr('href');
@@ -132,12 +166,15 @@
     	 console.log("codTipo="+codTipo);
     	 if(codTipo=='FT002'){
     		//Se bozza
-    		$("#dtFatturaDiv").show();
-         	$("#idBolloDiv").show();
+    		$("#ivaDiv").hide();
+    		$("#imponibileDiv").hide();
+    		$("#dtFatturaDiv").hide();
+         	$("#idBolloDiv").hide();
          	$("#codTipoDiv").show();
          	$("#flagPagatoDiv").hide();
-         	$("#ivaDiv").show();
-         	$("#importoLordoDiv").show();
+         	$("#importoLordoDiv").hide();
+         	$("#iva").prop('required',false);
+         	$("#importoNetto").prop('required',false);
          	$("#dtFattura").prop('required',false);
          	$("#idBollo").prop('required',false);
          	$("#meseDiv").show();
@@ -151,6 +188,7 @@
           	$("#importoLordoDiv").hide();
           	$("#dtFattura").prop('required',true);
           	$("#idBollo").prop('required',false);
+          	$("#importoNetto").prop('required',true);
           	$("#meseDiv").hide();
           }else{
         	 //Se fattura
@@ -159,9 +197,11 @@
         	 $("#codTipoDiv").hide();
         	 $("#flagPagatoDiv").show();
         	 $("#ivaDiv").show();
+        	 $("#imponibileDiv").show();
         	 $("#importoLordoDiv").show();
         	 $("#dtFattura").prop('required',true);
         	 $("#idBollo").prop('required',true);
+        	 $("#importoNetto").prop('required',true);
         	 $("#meseDiv").hide();
          }
      }
@@ -266,12 +306,13 @@
 						</form:select>
 				 	</div>
 				  
-				  
-				  <div class="form-group">
-				    <form:label path="importoNetto">Imponibile</form:label>
-				    <form:input path="importoNetto" type="text" class="form-control euro" id="importoNetto" aria-describedby="importoNettoHelp" placeholder="Importo netto" required="true"/>
-				    <form:errors path="importoNetto" cssClass="error forceInline"/>
-				  </div>
+				  <div class="form-group" id="imponibileDiv">
+					  <div class="form-group">
+					    <form:label path="importoNetto">Imponibile</form:label>
+					    <form:input path="importoNetto" type="text" class="form-control euro" id="importoNetto" aria-describedby="importoNettoHelp" placeholder="Importo netto" required="true"/>
+					    <form:errors path="importoNetto" cssClass="error forceInline"/>
+					  </div>
+					</div>
 				  
 				   <div class="form-group" id="ivaDiv">
 				    <form:label path="iva">Iva</form:label>

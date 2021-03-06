@@ -15,16 +15,20 @@ public class BozzaFormFactory extends AbstractFormFactory<Fattura, BozzaForm> {
 	@Override
 	public BozzaForm getForm(Fattura fattura) {
 		BozzaForm bozzaForm = new BozzaForm();
+		bozzaForm.setIdFattura(fattura.getIdFattura());
 		bozzaForm.setDenominazioneCliente(fattura.getCliente().getDenominazione());
 		bozzaForm.setPivaCiente(fattura.getCliente().getPiva());
 		bozzaForm.setDescrMese(fattura.getMese().getDescrizione());
 		String attivitaStr="";
 		BigDecimal importoTotale=new BigDecimal(0);
 		for(Attivita attivita:fattura.getAttivitas()) {
-			attivitaStr+=" "+attivita.getDescrizione();
+			attivitaStr+="-"+attivita.getDescrizione();
 			if(attivita.getImportoNetto()!=null)
 				importoTotale=importoTotale.add(attivita.getImportoNetto());
 		}
+		int indice=attivitaStr.indexOf('-');
+		if(indice>=0)
+			attivitaStr=attivitaStr.substring(indice+1);
 		bozzaForm.setAttivita(attivitaStr);
 		bozzaForm.setImportoAttvita(importoTotale);
 		return bozzaForm;

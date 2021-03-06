@@ -43,4 +43,6 @@ public interface IFatturaService {
 	List<FatturaForm> getAllFattureBlack();
 
 	List<BozzaForm> getAllBozzeEntity();
+	
+	List<BozzaForm> getAllBozzeCliente(Integer idCliente);
 }

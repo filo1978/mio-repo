@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,7 +65,8 @@ public class FatturaController extends SmartAbstractController{
 	@Autowired
 	private HttpSession session;
 	
-	private static BigDecimal IVA_DEFAULT=new BigDecimal(4);
+	@Value("${iva_default}")
+	private BigDecimal ivaDefault;
 	
 	@RequestMapping(value = "/lista-fatture", method = RequestMethod.GET)
 	public ModelAndView listaFatture() {
@@ -132,7 +134,7 @@ public class FatturaController extends SmartAbstractController{
 		if(tipoFattura.equals(TipoFatturaEnum.BLACK.getCod())) {
 			return new BigDecimal(0);
 		}else {
-			return IVA_DEFAULT;
+			return ivaDefault;
 		}
 	}
 

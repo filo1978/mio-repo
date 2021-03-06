@@ -1,7 +1,6 @@
 package it.spaziowiki.fatturazione.form;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,10 +17,8 @@ public class FatturaForm extends AbstractForm {
 	private String numeroFattura;
 	private String dtFattura;
 	private String idBollo;
-	@NotNull(message="{campo.obbligatorio}")
 	private BigDecimal importoNetto;
 	private BigDecimal importoLordo;
-	@NotNull(message="{campo.obbligatorio}")
 	private BigDecimal iva;
 	@NotBlank(message="{campo.obbligatorio}")
 	private String oggetto;

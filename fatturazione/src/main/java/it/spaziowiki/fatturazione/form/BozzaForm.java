@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class BozzaForm extends AbstractForm {
 
+	private Integer idFattura;
 	private String denominazioneCliente;
 	private String pivaCiente;
 	private String descrMese;
@@ -48,6 +49,14 @@ public class BozzaForm extends AbstractForm {
 
 	public void setImportoAttvita(BigDecimal importoAttvita) {
 		this.importoAttvita = importoAttvita;
+	}
+
+	public Integer getIdFattura() {
+		return idFattura;
+	}
+
+	public void setIdFattura(Integer idFattura) {
+		this.idFattura = idFattura;
 	}
 
 }

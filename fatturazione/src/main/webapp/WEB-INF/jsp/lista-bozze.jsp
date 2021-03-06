@@ -19,22 +19,22 @@ $(document).ready( function () {
 			        "mData" : "denominazioneCliente",
 			        "autoWidth": true
 			       },
+			       { "sTitle" : "IVA",
+				        "mData" : "pivaCiente",
+				        "autoWidth": true
+				       },
 			       { "sTitle" : "Mese",
 				        "mData" : "descrMese",
 				        "autoWidth": true
-				       },
-			       { "sTitle" : "IVA",
-				        "mData" : "iva",
+				    },
+				    { "sTitle" : "Attività",
+				        "mData" : "attivita",
 				        "autoWidth": true
-				       },
-			       { "sTitle" : "Importo Netto",
-				        "mData" : "importoNetto",
+				    },   
+				    { "sTitle" : "Importo",
+				        "mData" : "importoAttvita",
 				        "autoWidth": true
-				       },
-			       { "sTitle" : "Importo Lordo",
-				        "mData" : "importoLordo",
-				        "autoWidth": true
-				       },     
+				    },    
 				{	"sTitle" : "Dettaglio",
 				   	        "mData" : "idFattura",
 				   	        "autoWidth": true,

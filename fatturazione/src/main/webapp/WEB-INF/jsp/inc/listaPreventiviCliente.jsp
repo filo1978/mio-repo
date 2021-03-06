@@ -7,18 +7,18 @@ $(document).ready( function () {
 			"order": [[ 0, "desc" ]],
 			"aoColumns": [
 				
-			       { "sTitle" : "IVA",
-				        "mData" : "iva",
-				        "sWidth": "20%"
-				       },
-			       { "sTitle" : "Importo Netto",
-				        "mData" : "importoNetto",
-				        "sWidth": "20%"
-				       },
-			       { "sTitle" : "Importo Lordo",
-				        "mData" : "importoLordo",
-				        "sWidth": "20%"
-				       }
+			       { "sTitle" : "Mese",
+				        "mData" : "descrMese",
+				        "autoWidth": true
+				    },
+				    { "sTitle" : "Attività",
+				        "mData" : "attivita",
+				        "autoWidth": true
+				    },   
+				    { "sTitle" : "Importo",
+				        "mData" : "importoAttvita",
+				        "autoWidth": true
+				    }
 			],
 			"bFilter": true,
 			"sPaginationType": "full_numbers",

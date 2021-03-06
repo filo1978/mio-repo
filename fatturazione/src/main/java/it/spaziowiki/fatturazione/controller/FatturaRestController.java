@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.spaziowiki.fatturazione.enums.TipoFatturaEnum;
+import it.spaziowiki.fatturazione.form.BozzaForm;
 import it.spaziowiki.fatturazione.form.ClienteFatturaAnnoForm;
 import it.spaziowiki.fatturazione.form.ClienteForm;
 import it.spaziowiki.fatturazione.form.FatturaAnnoFormWrapper;
@@ -51,17 +52,6 @@ public class FatturaRestController {
 			
 		}
 		
-//		Calendar c = Calendar.getInstance();
-//		Integer annoAttuale=c.get(Calendar.YEAR);
-//		ImportoMeseAnnoForm importoMeseAnnoAttuale=new ImportoMeseAnnoForm();
-//		importoMeseAnnoAttuale.setAnno(annoAttuale);
-//		importoMeseAnnoAttuale.setLista(fatturaService.getImportoMese(annoAttuale));
-//		Integer annoPrecedente=annoAttuale-1;
-//		ImportoMeseAnnoForm importoMeseAnnoPrecedente=new ImportoMeseAnnoForm();
-//		importoMeseAnnoPrecedente.setAnno(annoPrecedente);
-//		importoMeseAnnoPrecedente.setLista(fatturaService.getImportoMese(annoPrecedente));
-//		l.add(importoMeseAnnoPrecedente);
-//		l.add(importoMeseAnnoAttuale);
 		return l;
 	}
 	
@@ -77,8 +67,8 @@ public class FatturaRestController {
 	}
 	
 	@RequestMapping(value = "/lista-all-bozze-cliente", method = RequestMethod.GET)
-	public List<FatturaForm> getAllBozzeCliente(){
-		return fatturaService.getAllFattureCliente(getClienteFromFromSession().getIdCliente(),TipoFatturaEnum.BOZZA.getCod());
+	public List<BozzaForm> getAllBozzeCliente(){
+		return fatturaService.getAllBozzeCliente(getClienteFromFromSession().getIdCliente());
 	}
 	
 	@RequestMapping(value = "/lista-all-prestazioni-cliente", method = RequestMethod.GET)
@@ -97,8 +87,8 @@ public class FatturaRestController {
 	}
 	
 	@RequestMapping(value = "/lista-all-bozze", method = RequestMethod.GET)
-	public List<FatturaForm> getAllBozze(){
-		return fatturaService.getAllBozze();
+	public List<BozzaForm> getAllBozze(){
+		return fatturaService.getAllBozzeEntity();
 	}
 	
 	private ClienteForm getClienteFromFromSession(){
