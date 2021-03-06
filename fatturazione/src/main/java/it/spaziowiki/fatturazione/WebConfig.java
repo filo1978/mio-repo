@@ -20,6 +20,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import it.spaziowiki.fatturazione.view.ListaBozzeExcelView;
 import it.spaziowiki.fatturazione.view.ListaFattureExcelView;
 
 @Configuration
@@ -87,6 +88,12 @@ public class WebConfig implements WebMvcConfigurer {
 		return listaFattureExcelView;
 	}
 
+	@Bean
+	public ListaBozzeExcelView listaBozzeExcelView() {
+		ListaBozzeExcelView listaBozzeExcelView = new ListaBozzeExcelView();
+		return listaBozzeExcelView;
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());

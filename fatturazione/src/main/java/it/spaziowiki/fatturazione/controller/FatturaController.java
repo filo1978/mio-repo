@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.spaziowiki.fatturazione.entities.Fattura;
 import it.spaziowiki.fatturazione.enums.StatoFatturaEnum;
 import it.spaziowiki.fatturazione.enums.TipoFatturaEnum;
 import it.spaziowiki.fatturazione.exception.FatturaDeleteException;
@@ -79,6 +80,11 @@ public class FatturaController extends SmartAbstractController{
 	public ModelAndView scaricaListaFattureExcel() {
 		List<FatturaForm> l= fatturaService.getAllFatture();
 		return new ModelAndView("listaFattureExcelView", "listaFatture", l);
+	}
+	
+	@RequestMapping(value = "/scarica-lista-bozze-excel", method = RequestMethod.GET)
+	public ModelAndView scaricaListaBozzeExcel() {
+		return new ModelAndView("listaBozzeExcelView", "listaBozze", fatturaService.getAllBozzeEntity());
 	}
 	
 	@RequestMapping(value = "/scarica-lista-prestazioni-excel", method = RequestMethod.GET)

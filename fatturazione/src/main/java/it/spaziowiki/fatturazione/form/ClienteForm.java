@@ -11,13 +11,11 @@ public class ClienteForm extends AbstractForm{
 	private String denominazione;
 	@NotBlank(message="{campo.obbligatorio}")
 	private String nickname;
-	@NotBlank(message="{campo.obbligatorio}")
 	private String email;
 	@NotBlank(message="{campo.obbligatorio}")
 	private String indirizzo;
 	@NotBlank(message="{campo.obbligatorio}")
 	private String piva;
-	@NotBlank(message="{campo.obbligatorio}")
 	private String telefono;
 	@NotBlank(message="{campo.obbligatorio}")
 	private String codCom;

@@ -30,6 +30,7 @@ import it.spaziowiki.fatturazione.exception.AttivitaSaveException;
 import it.spaziowiki.fatturazione.exception.FatturaDeleteException;
 import it.spaziowiki.fatturazione.exception.FatturaException;
 import it.spaziowiki.fatturazione.form.AttivitaForm;
+import it.spaziowiki.fatturazione.form.BozzaForm;
 import it.spaziowiki.fatturazione.form.ClienteFatturaAnnoForm;
 import it.spaziowiki.fatturazione.form.FatturaAnnoForm;
 import it.spaziowiki.fatturazione.form.FatturaAnnoFormWrapper;
@@ -37,6 +38,7 @@ import it.spaziowiki.fatturazione.form.FatturaForm;
 import it.spaziowiki.fatturazione.form.ImportoMeseForm;
 import it.spaziowiki.fatturazione.form.PairDto;
 import it.spaziowiki.fatturazione.form.TotaleFattureForm;
+import it.spaziowiki.fatturazione.form.factory.BozzaFormFactory;
 import it.spaziowiki.fatturazione.form.factory.FatturaFormFactory;
 import it.spaziowiki.fatturazione.repository.AttivitaRepository;
 import it.spaziowiki.fatturazione.repository.CMeseRepository;
@@ -75,6 +77,9 @@ public class FatturaService implements IFatturaService {
 	
 	@Autowired
 	private CMeseRepository meseRepository;
+	
+	@Autowired
+	private BozzaFormFactory bozzaFormFactory;
 	
 	@Override
 	public List<FatturaForm> getAllFattureCliente(Integer idCliente,String codTipoFattura){
@@ -275,6 +280,14 @@ public class FatturaService implements IFatturaService {
 		fatturaRepository.delete(fattura);
 	}
 
+	@Override
+	public List<BozzaForm> getAllBozzeEntity() {
+		TipoFattura tipoFattura = new TipoFattura();
+		tipoFattura.setCod(TipoFatturaEnum.BOZZA.getCod());
+		List<Fattura>l=fatturaRepository.findByTipoFattura(tipoFattura);
+		return bozzaFormFactory.getList(l);
+	}
+	
 	@Override
 	public List<FatturaForm> getAllBozze() {
 		return getAllFattureByTipo(TipoFatturaEnum.BOZZA.getCod());

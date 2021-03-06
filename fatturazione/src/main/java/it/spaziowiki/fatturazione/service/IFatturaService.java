@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.spaziowiki.fatturazione.exception.FatturaDeleteException;
 import it.spaziowiki.fatturazione.exception.FatturaException;
+import it.spaziowiki.fatturazione.form.BozzaForm;
 import it.spaziowiki.fatturazione.form.ClienteFatturaAnnoForm;
 import it.spaziowiki.fatturazione.form.FatturaAnnoFormWrapper;
 import it.spaziowiki.fatturazione.form.FatturaForm;
@@ -40,4 +41,6 @@ public interface IFatturaService {
 	FatturaAnnoFormWrapper getFatturaAnno();
 
 	List<FatturaForm> getAllFattureBlack();
+
+	List<BozzaForm> getAllBozzeEntity();
 }

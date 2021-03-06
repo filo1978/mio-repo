@@ -111,9 +111,15 @@ function dettaglioFattura(item) {
 						
 					</div>
 					<div class="form-group" style="width: 100%;text-align: center;">
+					
 						<a href="<c:url value='/nuova-fattura?tipoFattura=FT002' />" >
-						  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-pencil-alt"></i> Nuova Bozza</button>
+						  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-pencil-alt"></i> Nuova bozza</button>
 						</a>
+						&nbsp;
+						<a href="<c:url value='/scarica-lista-bozze-excel' />" >
+						  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-download"></i> Scarica lista bozze</button>
+						</a>
+						
 					</div>
 
                 </div>
