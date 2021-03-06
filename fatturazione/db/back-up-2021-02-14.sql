@@ -11453,4 +11453,4 @@ CREATE TABLE "tipo_fattura" (
 
 INSERT INTO "tipo_fattura" ("COD", "DESCRIZIONE") VALUES 
 ('FT001', 'FATTURA'),
-('FT002', 'PREVENTIVO');
+('FT002', 'BOZZA');

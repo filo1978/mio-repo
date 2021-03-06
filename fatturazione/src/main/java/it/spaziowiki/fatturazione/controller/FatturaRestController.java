@@ -76,9 +76,9 @@ public class FatturaRestController {
 		return fatturaService.getAllFattureCliente(getClienteFromFromSession().getIdCliente(),TipoFatturaEnum.FATTURA.getCod());
 	}
 	
-	@RequestMapping(value = "/lista-all-preventivi-cliente", method = RequestMethod.GET)
-	public List<FatturaForm> getAllPreventiviCliente(){
-		return fatturaService.getAllFattureCliente(getClienteFromFromSession().getIdCliente(),TipoFatturaEnum.PREVENTIVO.getCod());
+	@RequestMapping(value = "/lista-all-bozze-cliente", method = RequestMethod.GET)
+	public List<FatturaForm> getAllBozzeCliente(){
+		return fatturaService.getAllFattureCliente(getClienteFromFromSession().getIdCliente(),TipoFatturaEnum.BOZZA.getCod());
 	}
 	
 	@RequestMapping(value = "/lista-all-prestazioni-cliente", method = RequestMethod.GET)
@@ -96,9 +96,9 @@ public class FatturaRestController {
 		return fatturaService.getAllFattureBlack();
 	}
 	
-	@RequestMapping(value = "/lista-all-preventivi", method = RequestMethod.GET)
-	public List<FatturaForm> getAllPreventivi(){
-		return fatturaService.getAllPreventivi();
+	@RequestMapping(value = "/lista-all-bozze", method = RequestMethod.GET)
+	public List<FatturaForm> getAllBozze(){
+		return fatturaService.getAllBozze();
 	}
 	
 	private ClienteForm getClienteFromFromSession(){

@@ -18,11 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import it.spaziowiki.fatturazione.entities.Attivita;
+import it.spaziowiki.fatturazione.entities.CMese;
 import it.spaziowiki.fatturazione.entities.Cliente;
 import it.spaziowiki.fatturazione.entities.Fattura;
 import it.spaziowiki.fatturazione.entities.StatoFattura;
 import it.spaziowiki.fatturazione.entities.TipoFattura;
-import it.spaziowiki.fatturazione.enums.FlagSiNoEnum;
 import it.spaziowiki.fatturazione.enums.MeseEnum;
 import it.spaziowiki.fatturazione.enums.StatoFatturaEnum;
 import it.spaziowiki.fatturazione.enums.TipoFatturaEnum;
@@ -39,11 +39,13 @@ import it.spaziowiki.fatturazione.form.PairDto;
 import it.spaziowiki.fatturazione.form.TotaleFattureForm;
 import it.spaziowiki.fatturazione.form.factory.FatturaFormFactory;
 import it.spaziowiki.fatturazione.repository.AttivitaRepository;
+import it.spaziowiki.fatturazione.repository.CMeseRepository;
 import it.spaziowiki.fatturazione.repository.ClienteRepository;
 import it.spaziowiki.fatturazione.repository.FatturaRepository;
 import it.spaziowiki.fatturazione.repository.StatoFatturaRepository;
 import it.spaziowiki.fatturazione.repository.TipoFatturaRepository;
 import it.spaziowiki.fatturazione.service.IAttivitaService;
+import it.spaziowiki.fatturazione.service.ICMeseService;
 import it.spaziowiki.fatturazione.service.IFatturaService;
 
 @Service
@@ -70,6 +72,9 @@ public class FatturaService implements IFatturaService {
 	
 	@Autowired
 	private StatoFatturaRepository statoFatturaRepository;
+	
+	@Autowired
+	private CMeseRepository meseRepository;
 	
 	@Override
 	public List<FatturaForm> getAllFattureCliente(Integer idCliente,String codTipoFattura){
@@ -105,6 +110,10 @@ public class FatturaService implements IFatturaService {
 		fattura.setStatoFattura(getStatoFattura(fatturaForm));
 		if(fatturaForm.isTipoFattura())
 			fattura.setNumeroFattura(getNumeroFattura(cliente,fattura));
+		if(StringUtils.hasText(fatturaForm.getCodMese())) {
+			CMese mese= meseRepository.findById(fatturaForm.getCodMese()).get();
+			fattura.setMese(mese);
+		}
 		fatturaRepository.save(fattura);
 		return fattura.getIdFattura();
 	}
@@ -124,7 +133,7 @@ public class FatturaService implements IFatturaService {
 			throw new FatturaException("Bollo obbligatorio");
 		Fattura fattura=fatturaRepository.findByIdBollo(fatturaForm.getIdBollo());
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		if(fattura!=null)
+		if(fattura!=null&&(fatturaForm.getIdFattura()==null||fatturaForm.getIdFattura().compareTo(fattura.getIdFattura())!=0))
 			throw new FatturaException("Numero bollo già utilizzato");
 		try {
 			Date dataFattura=new SimpleDateFormat("dd/MM/yyyy").parse(fatturaForm.getDtFattura());
@@ -213,7 +222,7 @@ public class FatturaService implements IFatturaService {
 		fattura.setCliente(cliente);
 		
 		if(isFromPreventivoToFattura(fattura,fatturaForm)){
-			checkInsert(fatturaForm); 
+			checkInsert(fatturaForm);
 		}else{
 			checkUpdate(fatturaForm); 
 		}
@@ -231,8 +240,12 @@ public class FatturaService implements IFatturaService {
 		fattura.setIva(fatturaForm.getIva());
 		fattura.setOggetto(fatturaForm.getOggetto());
 		fattura.setStatoFattura(getStatoFattura(fatturaForm));
+		if(StringUtils.hasText(fatturaForm.getCodMese())) {
+			CMese mese= meseRepository.findById(fatturaForm.getCodMese()).get();
+			fattura.setMese(mese);
+		}
 		if(isFromPreventivoToFattura(fattura,fatturaForm)){
-			
+			fattura.setStatoFattura(getStatoFattura(fatturaForm));
 			fattura.setTipoFattura(tipoFatturaRepository.findById(fatturaForm.getCodTipo()).get());
 			fattura.setNumeroFattura(getNumeroFattura(cliente,fattura));
 			
@@ -241,7 +254,7 @@ public class FatturaService implements IFatturaService {
 	}
 	
 	private boolean isFromPreventivoToFattura(Fattura fattura,FatturaForm fatturaForm){
-		return fattura.getTipoFattura().getCod().equals(TipoFatturaEnum.PREVENTIVO.getCod())&&fatturaForm.getCodTipo().equals(TipoFatturaEnum.FATTURA.getCod());
+		return fattura.getTipoFattura().getCod().equals(TipoFatturaEnum.BOZZA.getCod())&&fatturaForm.getCodTipo().equals(TipoFatturaEnum.FATTURA.getCod());
 	}
 
 	@Override
@@ -263,8 +276,8 @@ public class FatturaService implements IFatturaService {
 	}
 
 	@Override
-	public List<FatturaForm> getAllPreventivi() {
-		return getAllFattureByTipo(TipoFatturaEnum.PREVENTIVO.getCod());
+	public List<FatturaForm> getAllBozze() {
+		return getAllFattureByTipo(TipoFatturaEnum.BOZZA.getCod());
 	}
 
 	@Override

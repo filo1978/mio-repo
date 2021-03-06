@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -23,10 +22,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.spaziowiki.fatturazione.enums.StatoFatturaEnum;
 import it.spaziowiki.fatturazione.enums.TipoFatturaEnum;
 import it.spaziowiki.fatturazione.exception.FatturaDeleteException;
 import it.spaziowiki.fatturazione.exception.FatturaException;
 import it.spaziowiki.fatturazione.form.FatturaForm;
+import it.spaziowiki.fatturazione.service.ICMeseService;
 import it.spaziowiki.fatturazione.service.IClienteService;
 import it.spaziowiki.fatturazione.service.IExporterService;
 import it.spaziowiki.fatturazione.service.IFatturaService;
@@ -57,6 +58,9 @@ public class FatturaController extends SmartAbstractController{
 	private IStatoFatturaService statoFatturaService;
 	
 	@Autowired
+	private ICMeseService meseService;
+	
+	@Autowired
 	private HttpSession session;
 	
 	private static BigDecimal IVA_DEFAULT=new BigDecimal(4);
@@ -83,9 +87,9 @@ public class FatturaController extends SmartAbstractController{
 		return new ModelAndView("listaFattureExcelView", "listaFatture", l);
 	}
 	
-	@RequestMapping(value = "/lista-preventivi", method = RequestMethod.GET)
+	@RequestMapping(value = "/lista-bozze", method = RequestMethod.GET)
 	public ModelAndView listaPreventivi() {
-		return new ModelAndView("lista-preventivi");
+		return new ModelAndView("lista-bozze");
 	}
 	
 	
@@ -112,6 +116,7 @@ public class FatturaController extends SmartAbstractController{
 	@RequestMapping(value = "/nuova-fattura", method = RequestMethod.GET)
 	public ModelAndView nuovaFattura(@RequestParam(value = "tipoFattura" , required = true) String tipoFattura) {
 		FatturaForm fatturaForm=new FatturaForm();
+		fatturaForm.setCodStato(StatoFatturaEnum.NON_PAGATA.getCod());
 		fatturaForm.setCodTipo(tipoFattura);
 		fatturaForm.setIva(getIva(tipoFattura));
 		return getNuovaFatturaModel(fatturaForm);
@@ -151,8 +156,8 @@ public class FatturaController extends SmartAbstractController{
 			fatturaService.delete(fatturaForm);
 			if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.BLACK.getCod())) {
 				return new ModelAndView("lista-black");
-			}else if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.PREVENTIVO.getCod())) {
-				return new ModelAndView("lista-preventivi");
+			}else if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.BOZZA.getCod())) {
+				return new ModelAndView("lista-bozze");
 			}else{
 				return new ModelAndView("lista-fatture");
 			}
@@ -219,10 +224,10 @@ public class FatturaController extends SmartAbstractController{
 			m.addObject("indietroButton", "Lista prestazioni");
 			m.addObject("indietroLink", "/lista-prestazioni");
 			m.addObject("titoloPagina", "Dettaglio prestazione");
-		}else if(codTipo.equals(TipoFatturaEnum.PREVENTIVO.getCod())) {
-			m.addObject("indietroButton", "Lista preventivi");
-			m.addObject("indietroLink", "/lista-preventivi");
-			m.addObject("titoloPagina", "Dettaglio preventivo");
+		}else if(codTipo.equals(TipoFatturaEnum.BOZZA.getCod())) {
+			m.addObject("indietroButton", "Lista bozze");
+			m.addObject("indietroLink", "/lista-bozze");
+			m.addObject("titoloPagina", "Dettaglio bozza");
 		}else {
 			throw new RuntimeException("Errore: non definito il tipo fattura="+codTipo);	
 		}
@@ -238,7 +243,7 @@ public class FatturaController extends SmartAbstractController{
 		}else if(fatturaForm.getCodTipo().equals(TipoFatturaEnum.BLACK.getCod())){
 			titoloPagina="Nuova prestazione";
 		}else{
-			titoloPagina="Nuovo preventivo";
+			titoloPagina="Nuova bozza";
 		}
 		m.addObject("titoloPagina", titoloPagina);
 		m.addObject("isInsert", isInsert);
@@ -248,9 +253,10 @@ public class FatturaController extends SmartAbstractController{
 	
 	private ModelAndView getFatturaModel(){
 		ModelAndView m = new ModelAndView("dettaglio-fattura");
-		m.addObject("listaTipoFattura", tipoFatturaService.findAllByOrderByDescrizioneAsc());
+		m.addObject("listaTipoFattura", tipoFatturaService.findBozzaFatturaByOrderByDescrizioneAsc());
 		m.addObject("listaClienti", clienteService.getAllClienti());
 		m.addObject("listaStatiFattura", statoFatturaService.findAllByOrderByDescrizioneAsc());
+		m.addObject("listaMesi", meseService.findAll());
 		return m;
 	}
 	

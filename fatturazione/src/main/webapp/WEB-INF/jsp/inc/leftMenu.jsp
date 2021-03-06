@@ -97,22 +97,22 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Preventivi
+        Bozze
       </div>
 
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="<c:url value='/lista-preventivi' />">
+        <a class="nav-link" href="<c:url value='/lista-bozze' />">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Lista Preventivi</span></a>
+          <span>Lista Bozze</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
         <a class="nav-link" href="<c:url value='/nuova-fattura?tipoFattura=FT002' />">
           <i class="fas fa-fw fa-table"></i>
-          <span>Nuovo Preventivo</span></a>
+          <span>Nuova Bozza</span></a>
       </li>
       
 

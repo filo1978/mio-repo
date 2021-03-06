@@ -2,7 +2,7 @@
 
 $(document).ready( function () {
 	 var table = $('#listaPreventiviTable').DataTable({
-			"sAjaxSource": "<c:url value='/lista-all-preventivi-cliente' />",
+			"sAjaxSource": "<c:url value='/lista-all-bozze-cliente' />",
 			"sAjaxDataProp": "",
 			"order": [[ 0, "desc" ]],
 			"aoColumns": [
@@ -48,7 +48,7 @@ $(document).ready( function () {
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Lista Preventivi</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Lista Bozze</h6>
 	</div>
 	<div class="card-body">
 		<div class="form-group">

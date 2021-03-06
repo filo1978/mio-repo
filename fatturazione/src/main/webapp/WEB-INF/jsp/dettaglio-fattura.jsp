@@ -13,29 +13,6 @@
     	 initNumber();
     	 gestisciDatiFattura( $('#codTipo').val());
     	 
-    	 
-    	 
-    	 $('#codTipo').on('change', function() {
-         	console.log("ciaooo");
-            var value = $(this).val(); 
-            console.log("codTipo="+value); 	
-            //Se preventivo
-            if(value=='FT002'){
-            	
-            }else{
-            	
-            	
-            }
-            	
-    	 });
-    	 
-    	 $('#codTipo').on('change', function() {
-         	console.log("ciaooo");
-            var value = $(this).val(); 
-            console.log("valore="+value);
-            gestisciDatiFattura(value);
-            	
-    	 });
           
     	 $('#stampa-fattura').click(function(e) {
     		 e.preventDefault();
@@ -152,15 +129,18 @@
      
      
      function gestisciDatiFattura(codTipo){
+    	 console.log("codTipo="+codTipo);
     	 if(codTipo=='FT002'){
-    		//Se preventivo
-    		$("#dtFatturaDiv").hide();
-         	$("#idBolloDiv").hide();
+    		//Se bozza
+    		$("#dtFatturaDiv").show();
+         	$("#idBolloDiv").show();
+         	$("#codTipoDiv").show();
          	$("#flagPagatoDiv").hide();
          	$("#ivaDiv").show();
          	$("#importoLordoDiv").show();
          	$("#dtFattura").prop('required',false);
          	$("#idBollo").prop('required',false);
+         	$("#meseDiv").show();
          }else if(codTipo=='FT003'){
      		//Se black
      		$("#dtFatturaDiv").show();
@@ -171,15 +151,18 @@
           	$("#importoLordoDiv").hide();
           	$("#dtFattura").prop('required',true);
           	$("#idBollo").prop('required',false);
+          	$("#meseDiv").hide();
           }else{
         	 //Se fattura
         	 $("#dtFatturaDiv").show();
         	 $("#idBolloDiv").show();
+        	 $("#codTipoDiv").hide();
         	 $("#flagPagatoDiv").show();
         	 $("#ivaDiv").show();
         	 $("#importoLordoDiv").show();
         	 $("#dtFattura").prop('required',true);
         	 $("#idBollo").prop('required',true);
+        	 $("#meseDiv").hide();
          }
      }
  	
@@ -243,7 +226,7 @@
 					<form:errors path="idCliente" cssClass="error forceInline"/>
 				 </div>
 				
-				 <c:if test="${!isInsert && !fattura.tipoFattura}">
+				<c:if test="${!isInsert}">
 				 	<div class="form-group" id="codTipoDiv">
 				 		<form:label path = "codTipo">Tipo</form:label>
 					  	<form:select required="true" class="form-control" path="codTipo">
@@ -257,6 +240,14 @@
 				    <form:label path="dtFattura">Data fattura</form:label>
 				    <form:input path="dtFattura" type="text" class="form-control date" id="dtFattura" aria-describedby="dtFatturaHelp" placeholder="Data fattura" />
 				    <form:errors path="dtFattura" cssClass="error forceInline"/>
+				  </div>
+				  
+				  
+				  <div class="form-group" id="meseDiv">
+				  	<form:label path = "codMese">Mese</form:label>
+					<form:select   class="form-control" path="codMese" >
+				  		<form:options items="${listaMesi}"  itemValue="cod" itemLabel="descrizione" />
+					</form:select>
 				  </div>
 				
 				  

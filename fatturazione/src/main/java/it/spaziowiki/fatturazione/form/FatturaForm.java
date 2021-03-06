@@ -30,6 +30,8 @@ public class FatturaForm extends AbstractForm {
 	private String denominazioneCliente;
 	private Integer anno;
 	private String pivaCiente;
+	private String codMese;
+	private String descrMese;
 
 	public Integer getIdFattura() {
 		return idFattura;
@@ -161,6 +163,22 @@ public class FatturaForm extends AbstractForm {
 
 	public void setPivaCiente(String pivaCiente) {
 		this.pivaCiente = pivaCiente;
+	}
+
+	public String getCodMese() {
+		return codMese;
+	}
+
+	public void setCodMese(String codMese) {
+		this.codMese = codMese;
+	}
+
+	public String getDescrMese() {
+		return descrMese;
+	}
+
+	public void setDescrMese(String descrMese) {
+		this.descrMese = descrMese;
 	}
 
 }

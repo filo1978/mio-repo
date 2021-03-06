@@ -64,6 +64,11 @@ public class Fattura implements Serializable , Cloneable {
 	@ManyToOne
 	@JoinColumn(name="stato")
 	private StatoFattura statoFattura;
+	
+	//bi-directional many-to-one association to CMese
+	@ManyToOne
+	@JoinColumn(name="cod_mese")
+	private CMese mese;
 
 	public Fattura() {
 	}
@@ -169,6 +174,14 @@ public class Fattura implements Serializable , Cloneable {
 
 	public void setStatoFattura(StatoFattura statoFattura) {
 		this.statoFattura = statoFattura;
+	}
+	
+	public CMese getMese() {
+		return mese;
+	}
+
+	public void setMese(CMese mese) {
+		this.mese = mese;
 	}
 
 	public Fattura clone() {

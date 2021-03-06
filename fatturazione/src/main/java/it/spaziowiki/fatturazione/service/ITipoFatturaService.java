@@ -7,4 +7,6 @@ import it.spaziowiki.fatturazione.form.PairDto;
 public interface ITipoFatturaService {
 
 	List<PairDto> findAllByOrderByDescrizioneAsc();
+
+	List<PairDto> findBozzaFatturaByOrderByDescrizioneAsc();
 }

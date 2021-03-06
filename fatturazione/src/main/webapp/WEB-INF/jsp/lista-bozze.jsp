@@ -11,29 +11,33 @@
 
 $(document).ready( function () {
 	 var table = $('#listaFattureTable').DataTable({
-			"sAjaxSource": "<c:url value='/lista-all-preventivi' />",
+			"sAjaxSource": "<c:url value='/lista-all-bozze' />",
 			"sAjaxDataProp": "",
 			"order": [[ 0, "desc" ]],
 			"aoColumns": [
 				 { "sTitle" : "Cliente",
 			        "mData" : "denominazioneCliente",
-			        "sWidth": "30%"
+			        "autoWidth": true
 			       },
+			       { "sTitle" : "Mese",
+				        "mData" : "descrMese",
+				        "autoWidth": true
+				       },
 			       { "sTitle" : "IVA",
 				        "mData" : "iva",
-				        "sWidth": "20%"
+				        "autoWidth": true
 				       },
 			       { "sTitle" : "Importo Netto",
 				        "mData" : "importoNetto",
-				        "sWidth": "20%"
+				        "autoWidth": true
 				       },
 			       { "sTitle" : "Importo Lordo",
 				        "mData" : "importoLordo",
-				        "sWidth": "20%"
+				        "autoWidth": true
 				       },     
 				{	"sTitle" : "Dettaglio",
 				   	        "mData" : "idFattura",
-				   	        "sWidth": "10%",
+				   	        "autoWidth": true,
 				   	      	"orderable": false,
 				   	     "className": "text-center",
 		   	        "mRender" : function(data, type, val) {
@@ -98,7 +102,7 @@ function dettaglioFattura(item) {
           <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Lista preventivi</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Lista Bozze</h6>
                 </div>
                 <div class="card-body">
 					<div class="form-group" style="width: 100%">
@@ -108,7 +112,7 @@ function dettaglioFattura(item) {
 					</div>
 					<div class="form-group" style="width: 100%;text-align: center;">
 						<a href="<c:url value='/nuova-fattura?tipoFattura=FT002' />" >
-						  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-pencil-alt"></i> Nuovo preventivo</button>
+						  <button type="button" class="btn btn-success navbar-btn"><i class="fas fa-pencil-alt"></i> Nuova Bozza</button>
 						</a>
 					</div>
 

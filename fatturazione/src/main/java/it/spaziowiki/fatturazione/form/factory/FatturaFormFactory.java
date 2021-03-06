@@ -43,6 +43,10 @@ public class FatturaFormFactory extends AbstractFormFactory<Fattura, FatturaForm
 			fatturaForm.setDtFattura(formatter.format(fattura.getDtFattura()));
 			fatturaForm.setAnno(formatter.getCalendar().get(Calendar.YEAR));
 		}
+		if(fattura.getMese()!=null) {
+			fatturaForm.setCodMese(fattura.getMese().getCod());
+			fatturaForm.setDescrMese(fattura.getMese().getDescrizione());
+		}
 		return fatturaForm;
 	}
 

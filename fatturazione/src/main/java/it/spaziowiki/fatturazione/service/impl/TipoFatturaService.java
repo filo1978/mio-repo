@@ -25,5 +25,11 @@ public class TipoFatturaService implements ITipoFatturaService {
 	public List<PairDto> findAllByOrderByDescrizioneAsc() {
 		return tipoFatturaFormFactory.getList(tipoFatturaRepository.findAllByOrderByDescrizioneAsc());
 	}
+	
+	@Override
+	public List<PairDto> findBozzaFatturaByOrderByDescrizioneAsc() {
+		return tipoFatturaFormFactory.getList(tipoFatturaRepository.findBozzaFatturaByOrderByDescrizioneAsc());
+	}
+	
 
 }

@@ -29,7 +29,7 @@ public interface IFatturaService {
 	
 	List<PairDto> getAllAnnoFatture();
 
-	List<FatturaForm> getAllPreventivi();
+	List<FatturaForm> getAllBozze();
 
 	List<TotaleFattureForm> getTotaleFattoreProjection();
 
