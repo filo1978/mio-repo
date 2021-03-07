@@ -20,32 +20,6 @@
              gestisciDatiFattura(codTipoSelezionato);
              //Perchè gli do sempre la possibilità di tornare in dietro in stato bozza
              $("#codTipoDiv").show();
-             if(codTipoSelezionato=='FT001'){
-        		 
-            	 $.ajax({
-     			    
-     		        type: 'GET',
-     		        contentType: "application/json",
-     		        url: "<c:url value='/get-totale-attivita'/>",
-     		       // data : { sezione : sezioneToolTip,codFase:fase},
-     		        success: function(data){
-     		        	
-     		        	var importoNettoFattura=$("#importoNetto").autoNumeric("get");
-     		        	console.log("importoNettoFattura="+importoNettoFattura);
-     		        	$("#importoNetto").val(data.totaleAttivita);
-     		        	initNumber();
-     		        	console.log("data.toCheck="+data.toCheck);
-     		        	console.log("data.totaleAttivita="+data.totaleAttivita);
-     		        	calcolaImportoLordo();
-     		        	
-     		        },
-     		        error:function(){
-     			        
-     		        }
-     			});
-            	 
-            	 
-             }
      	 });
     	 
     	 $('#stampa-fattura').click(function(e) {
@@ -141,6 +115,16 @@
      })
      
      
+     function aggiornaImportiFattura(data){
+		console.log("valore daAggiornareFattura="+data.daAggiornareFattura);
+		if(data.daAggiornareFattura){
+			console.log("valore importoFattura="+data.importoFattura);
+			console.log("Number valore importoFattura="+Number(data.importoFattura));
+			$("#importoNetto").autoNumeric('set', Number(data.importoFattura));
+			calcolaImportoLordo();
+		}
+	}
+     
      function calcolaImportoLordo(){
     	var importoNetto= $("#importoNetto").autoNumeric("get");
     	var iva= $("#iva").autoNumeric("get");
@@ -166,42 +150,66 @@
     	 console.log("codTipo="+codTipo);
     	 if(codTipo=='FT002'){
     		//Se bozza
-    		$("#ivaDiv").hide();
-    		$("#imponibileDiv").hide();
     		$("#dtFatturaDiv").hide();
-         	$("#idBolloDiv").hide();
-         	$("#codTipoDiv").show();
-         	$("#flagPagatoDiv").hide();
-         	$("#importoLordoDiv").hide();
-         	$("#iva").prop('required',false);
-         	$("#importoNetto").prop('required',false);
-         	$("#dtFattura").prop('required',false);
-         	$("#idBollo").prop('required',false);
+    		$("#dtFattura").prop('required',false);
+    		
+    		$("#flagPagatoDiv").hide();
+    		
+    		$("#imponibileDiv").show();
+    		$("#importoNetto").prop('required',false);
+    		$("#importoNetto").attr('readonly', 'readonly');
+    		
+    		$("#ivaDiv").hide();
+    		$("#iva").prop('required',false);
+    		
+    		$("#importoLordoDiv").hide();
+    		
+    		$("#idBolloDiv").hide();
+    		$("#idBollo").prop('required',false);
+    		
+    		$("#codTipoDiv").show();
+         	
          	$("#meseDiv").show();
          }else if(codTipo=='FT003'){
      		//Se black
      		$("#dtFatturaDiv").show();
-          	$("#idBolloDiv").hide();
-          	$("#codTipoDiv").hide();
-          	$("#flagPagatoDiv").show();
-          	$("#ivaDiv").hide();
-          	$("#importoLordoDiv").hide();
-          	$("#dtFattura").prop('required',true);
-          	$("#idBollo").prop('required',false);
-          	$("#importoNetto").prop('required',true);
+     		$("#dtFattura").prop('required',true);
+     		
+     		$("#flagPagatoDiv").show();
+     		
+     		$("#importoNetto").prop('required',true);
+     		
+     		$("#ivaDiv").hide();
+     		
+     		$("#importoLordoDiv").hide();
+     		
+     		$("#idBolloDiv").hide();
+     		$("#idBollo").prop('required',false);
+     		
+     		$("#codTipoDiv").hide();
+          	
           	$("#meseDiv").hide();
           }else{
         	 //Se fattura
         	 $("#dtFatturaDiv").show();
-        	 $("#idBolloDiv").show();
-        	 $("#codTipoDiv").hide();
-        	 $("#flagPagatoDiv").show();
-        	 $("#ivaDiv").show();
-        	 $("#imponibileDiv").show();
-        	 $("#importoLordoDiv").show();
         	 $("#dtFattura").prop('required',true);
-        	 $("#idBollo").prop('required',true);
+        	 
+        	 $("#flagPagatoDiv").show();
+        	 
+        	 $("#imponibileDiv").show();
         	 $("#importoNetto").prop('required',true);
+        	 $("#importoNetto").removeAttr('readonly');
+        	 
+        	 $("#ivaDiv").show();
+        	 $("#iva").prop('required',true);
+        	 
+        	 $("#importoLordoDiv").show();
+        	 
+        	 $("#idBolloDiv").show();
+        	 $("#idBollo").prop('required',true);
+        	 
+        	 $("#codTipoDiv").hide();
+        	 
         	 $("#meseDiv").hide();
          }
      }

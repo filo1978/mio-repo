@@ -21,10 +21,10 @@ public class BozzaFormFactory extends AbstractFormFactory<Fattura, BozzaForm> {
 		bozzaForm.setDescrMese(fattura.getMese().getDescrizione());
 		String attivitaStr="";
 		BigDecimal importoTotale=new BigDecimal(0);
+		if(fattura.getImportoNetto()!=null)
+			importoTotale=fattura.getImportoNetto();
 		for(Attivita attivita:fattura.getAttivitas()) {
 			attivitaStr+="-"+attivita.getDescrizione();
-			if(attivita.getImportoNetto()!=null)
-				importoTotale=importoTotale.add(attivita.getImportoNetto());
 		}
 		int indice=attivitaStr.indexOf('-');
 		if(indice>=0)

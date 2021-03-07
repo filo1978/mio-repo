@@ -10,6 +10,7 @@ import it.spaziowiki.fatturazione.form.FatturaAnnoFormWrapper;
 import it.spaziowiki.fatturazione.form.FatturaForm;
 import it.spaziowiki.fatturazione.form.ImportoMeseForm;
 import it.spaziowiki.fatturazione.form.PairDto;
+import it.spaziowiki.fatturazione.form.TotaleAttivitaForm;
 import it.spaziowiki.fatturazione.form.TotaleFattureForm;
 
 public interface IFatturaService {
@@ -45,4 +46,6 @@ public interface IFatturaService {
 	List<BozzaForm> getAllBozzeEntity();
 	
 	List<BozzaForm> getAllBozzeCliente(Integer idCliente);
+	
+	TotaleAttivitaForm aggiornaImportoNettoByAttivita(Integer idFattura);
 }

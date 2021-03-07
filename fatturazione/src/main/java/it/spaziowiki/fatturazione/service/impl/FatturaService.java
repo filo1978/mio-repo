@@ -38,6 +38,7 @@ import it.spaziowiki.fatturazione.form.FatturaAnnoFormWrapper;
 import it.spaziowiki.fatturazione.form.FatturaForm;
 import it.spaziowiki.fatturazione.form.ImportoMeseForm;
 import it.spaziowiki.fatturazione.form.PairDto;
+import it.spaziowiki.fatturazione.form.TotaleAttivitaForm;
 import it.spaziowiki.fatturazione.form.TotaleFattureForm;
 import it.spaziowiki.fatturazione.form.factory.BozzaFormFactory;
 import it.spaziowiki.fatturazione.form.factory.FatturaFormFactory;
@@ -48,7 +49,6 @@ import it.spaziowiki.fatturazione.repository.FatturaRepository;
 import it.spaziowiki.fatturazione.repository.StatoFatturaRepository;
 import it.spaziowiki.fatturazione.repository.TipoFatturaRepository;
 import it.spaziowiki.fatturazione.service.IAttivitaService;
-import it.spaziowiki.fatturazione.service.ICMeseService;
 import it.spaziowiki.fatturazione.service.IFatturaService;
 
 @Service
@@ -465,6 +465,25 @@ public class FatturaService implements IFatturaService {
 		tipoFattura.setCod(TipoFatturaEnum.BOZZA.getCod());
 		List<Fattura> l= fatturaRepository.findByClienteIdClienteAndTipoFattura(idCliente,tipoFattura);
 		return bozzaFormFactory.getList(l);
+	}
+
+
+
+	@Override
+	public TotaleAttivitaForm aggiornaImportoNettoByAttivita(Integer idFattura) {
+		TotaleAttivitaForm totaleAttivitaForm = new TotaleAttivitaForm();
+		Fattura fattura= fatturaRepository.findById(idFattura).get();
+		List<Attivita> listAttivita=attivitaRepository.findByFatturaIdFattura(idFattura);
+		totaleAttivitaForm.setTotaleAttivita(new BigDecimal(0));
+		for(Attivita attivita:listAttivita) {
+			if(attivita.getImportoNetto()!=null) {
+				totaleAttivitaForm.setToCheck(true);
+				totaleAttivitaForm.setTotaleAttivita(totaleAttivitaForm.getTotaleAttivita().add(attivita.getImportoNetto()));
+			}
+		}
+		if(totaleAttivitaForm.isToCheck())
+			fattura.setImportoNetto(totaleAttivitaForm.getTotaleAttivita());
+		return totaleAttivitaForm;
 	}
 
 }

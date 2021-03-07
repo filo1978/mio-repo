@@ -79,6 +79,8 @@ $(document).ready( function () {
 		            	$("#msgOkAttivita").text(data.msgOk);
 		            	console.log("mostrato messaggio ok");
 		            	$("#attivitaModal").modal("hide");
+		            	aggiornaImportiFattura(data);
+		            	
 		        	}else{
 		        		
 		        		console.log("ci sono errori...ora li mostro");
@@ -126,6 +128,8 @@ $(document).ready( function () {
 		        		var table = $('#listaAttivitaTable').DataTable();
 			        	table.ajax.reload();
 		        		$("#attivitaModal").modal("hide");
+		        		console.log('elimina e data.daAggiornareFattura='+data.daAggiornareFattura);
+		        		aggiornaImportiFattura(data);
 		            }else{
 		            	$("#msgKoDivAttivita").show();
 		            	$.each(data.errors, function( index, value ) {
@@ -144,6 +148,7 @@ $(document).ready( function () {
 	 
 	 
 });
+
 
 
 function resetMsg(){

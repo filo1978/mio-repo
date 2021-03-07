@@ -17,5 +17,5 @@ public interface IAttivitaService {
 
 	AttivitaForm update(AttivitaForm attivitaForm) throws AttivitaSaveException;
 	
-	void delete(AttivitaForm attivitaForm) ;
+	AttivitaForm delete(AttivitaForm attivitaForm) ;
 }

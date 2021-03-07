@@ -15,6 +15,9 @@ public class AttivitaForm extends AbstractForm {
 	private BigDecimal importoNettoAttivita;
 	private List<String>errors;
 	private String msgOk;
+	//Mi servono per aggiornare l'importo della fattura
+	private BigDecimal importoFattura;
+	private boolean daAggiornareFattura;
 
 	public Integer getIdFattura() {
 		return idFattura;
@@ -68,6 +71,22 @@ public class AttivitaForm extends AbstractForm {
 
 	public void setMsgOk(String msgOk) {
 		this.msgOk = msgOk;
+	}
+
+	public BigDecimal getImportoFattura() {
+		return importoFattura;
+	}
+
+	public void setImportoFattura(BigDecimal importoFattura) {
+		this.importoFattura = importoFattura;
+	}
+
+	public boolean isDaAggiornareFattura() {
+		return daAggiornareFattura;
+	}
+
+	public void setDaAggiornareFattura(boolean daAggiornareFattura) {
+		this.daAggiornareFattura = daAggiornareFattura;
 	}
 
 }

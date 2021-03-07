@@ -80,8 +80,8 @@ public class AttivitaRestController {
 	@RequestMapping(value = "/elimina-attivita", method = RequestMethod.POST)
 	@ResponseBody
 	public AttivitaForm delete(@RequestBody AttivitaForm attivitaForm) {
-		attivitaService.delete(attivitaForm);
-		return new AttivitaForm();
+		attivitaForm.setIdFattura(getFatturaFormFromSession().getIdFattura());
+		return attivitaService.delete(attivitaForm);
 	}
 	
 	@RequestMapping(value = "/dettaglio-attivita", method = RequestMethod.GET)

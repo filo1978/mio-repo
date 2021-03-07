@@ -10,10 +10,12 @@ import org.springframework.util.StringUtils;
 import it.spaziowiki.fatturazione.entities.Attivita;
 import it.spaziowiki.fatturazione.exception.AttivitaSaveException;
 import it.spaziowiki.fatturazione.form.AttivitaForm;
+import it.spaziowiki.fatturazione.form.TotaleAttivitaForm;
 import it.spaziowiki.fatturazione.form.factory.AttivitaFormFactory;
 import it.spaziowiki.fatturazione.repository.AttivitaRepository;
 import it.spaziowiki.fatturazione.repository.FatturaRepository;
 import it.spaziowiki.fatturazione.service.IAttivitaService;
+import it.spaziowiki.fatturazione.service.IFatturaService;
 
 @Service
 @Transactional
@@ -27,6 +29,9 @@ public class AttivitaService implements IAttivitaService {
 	
 	@Autowired
 	private FatturaRepository fatturaRepository;
+	
+	@Autowired
+	private IFatturaService fatturaService;
 
 	@Override
 	public List<AttivitaForm> findAttivitaByFattura(Integer idFattura) {
@@ -52,6 +57,9 @@ public class AttivitaService implements IAttivitaService {
 		attivita.setImportoNetto(attivitaForm.getImportoNettoAttivita());
 		attivitaRepository.save(attivita);
 		attivitaForm= attivitaFormFactory.getForm(attivita);
+		TotaleAttivitaForm totaleAttivitaForm= fatturaService.aggiornaImportoNettoByAttivita(attivitaForm.getIdFattura());
+		attivitaForm.setDaAggiornareFattura(totaleAttivitaForm.isToCheck());
+		attivitaForm.setImportoFattura(totaleAttivitaForm.getTotaleAttivita());
 		return attivitaForm;
 	}
 	
@@ -63,6 +71,9 @@ public class AttivitaService implements IAttivitaService {
 		attivitaDb.setImportoNetto(attivitaForm.getImportoNettoAttivita());
 		attivitaRepository.save(attivitaDb);
 		attivitaForm= attivitaFormFactory.getForm(attivitaDb);
+		TotaleAttivitaForm totaleAttivitaForm= fatturaService.aggiornaImportoNettoByAttivita(attivitaForm.getIdFattura());
+		attivitaForm.setDaAggiornareFattura(totaleAttivitaForm.isToCheck());
+		attivitaForm.setImportoFattura(totaleAttivitaForm.getTotaleAttivita());
 		return attivitaForm;
 	}
 	
@@ -89,9 +100,13 @@ public class AttivitaService implements IAttivitaService {
 	}
 
 	@Override
-	public void delete(AttivitaForm attivitaForm) {
+	public AttivitaForm delete(AttivitaForm attivitaForm) {
 		Attivita attivitaDb=attivitaRepository.findById(attivitaForm.getIdAttivita()).get();
 		attivitaRepository.delete(attivitaDb);
+		TotaleAttivitaForm totaleAttivitaForm= fatturaService.aggiornaImportoNettoByAttivita(attivitaForm.getIdFattura());
+		attivitaForm.setDaAggiornareFattura(totaleAttivitaForm.isToCheck());
+		attivitaForm.setImportoFattura(totaleAttivitaForm.getTotaleAttivita());
+		return attivitaForm;
 	}
 
 }
