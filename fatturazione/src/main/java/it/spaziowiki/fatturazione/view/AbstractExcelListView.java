@@ -6,9 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFPalette;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
@@ -67,6 +71,21 @@ public abstract class AbstractExcelListView extends AbstractXlsView {
 		style.setBorderLeft(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
+		
+		
+		HSSFWorkbook hwb = new HSSFWorkbook();
+		HSSFPalette palette = hwb.getCustomPalette();
+		// get the color which most closely matches the color you want to use
+		HSSFColor myColor = palette.findSimilarColor(128, 0, 128);
+		// get the palette index of that color 
+		short palIndex = myColor.getIndex();
+
+		style.setFillForegroundColor(palIndex);
+
+		
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		
 		return style;
 	}
 	
