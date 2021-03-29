@@ -48,4 +48,6 @@ public interface IFatturaService {
 	List<BozzaForm> getAllBozzeCliente(Integer idCliente);
 	
 	TotaleAttivitaForm aggiornaImportoNettoByAttivita(Integer idFattura);
+	
+	String getNomeFileFattura(Integer idFattura);
 }

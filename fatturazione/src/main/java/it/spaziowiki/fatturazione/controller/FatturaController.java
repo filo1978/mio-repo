@@ -107,9 +107,9 @@ public class FatturaController extends SmartAbstractController{
 		JasperPrint jasperPrint = null;
 
 		try {
-			
+			  String nomePdf=fatturaService.getNomeFileFattura(getFatturaFormFromSession().getIdFattura());
 			  response.setContentType("application/x-download");
-			  response.setHeader("Content-Disposition", String.format("attachment; filename=\"users.pdf\""));
+			  response.setHeader("Content-Disposition", String.format("attachment; filename=\""+nomePdf+"\""));
 
 			  OutputStream out = response.getOutputStream();
 

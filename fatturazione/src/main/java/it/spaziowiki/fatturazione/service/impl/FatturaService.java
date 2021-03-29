@@ -486,4 +486,22 @@ public class FatturaService implements IFatturaService {
 		return totaleAttivitaForm;
 	}
 
+
+
+	@Override
+	public String getNomeFileFattura(Integer idFattura) {
+		Fattura fattura=fatturaRepository.findById(idFattura).get();
+		Calendar calendar= Calendar.getInstance();
+		
+		return calendar.get(Calendar.YEAR)+"_n"+getIdFatturaStr(fattura)+"_"+fattura.getCliente().getNickname()+".pdf";
+	}
+
+	private String getIdFatturaStr(Fattura fattura) {
+		if(fattura.getIdFattura()<10)
+			return "00"+fattura.getIdFattura();
+		if(fattura.getIdFattura()<100)
+			return "0"+fattura.getIdFattura();
+		return ""+fattura.getIdFattura();
+		
+	}
 }
