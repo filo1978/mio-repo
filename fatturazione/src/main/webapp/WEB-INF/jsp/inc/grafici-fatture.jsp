@@ -163,7 +163,7 @@ $(document).ready( function () {
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3" style="background-color: #ed23ed;">
-		<h6 class="m-0 font-weight-bold text-primary">Fatturato mensile</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Fatturato mensile netto</h6>
 	</div>
 	<div class="card-body">
 		<div class="form-group" style="width: 100%">

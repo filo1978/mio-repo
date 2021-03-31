@@ -14,8 +14,8 @@ $(document).ready( function () {
 				        "mData" : "importoLordoFatturato",
 				        "sWidth": "15%"
 				       },
-				 { "sTitle" : "Importo Netto Fatturato",
-			        "mData" : "importoNettoFatturato",
+				 { "sTitle" : "Importo Lordo Incassato",
+			        "mData" : "importoLordoPagato",
 			        "sWidth": "15%"
 			       }
 			],
