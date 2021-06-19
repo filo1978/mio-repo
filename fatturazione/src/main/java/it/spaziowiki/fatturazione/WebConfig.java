@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import it.spaziowiki.fatturazione.view.ListaBozzeExcelView;
 import it.spaziowiki.fatturazione.view.ListaFattureExcelView;
+import it.spaziowiki.fatturazione.view.ListaTotaliExcelView;
 
 @Configuration
 @EnableWebMvc
@@ -88,6 +89,12 @@ public class WebConfig implements WebMvcConfigurer {
 	public ListaFattureExcelView listaFattureExcelView() {
 		ListaFattureExcelView listaFattureExcelView = new ListaFattureExcelView();
 		return listaFattureExcelView;
+	}
+	
+	@Bean
+	public ListaTotaliExcelView listaTotaliExcelView() {
+		ListaTotaliExcelView listaTotaliExcelView = new ListaTotaliExcelView();
+		return listaTotaliExcelView;
 	}
 
 	@Bean

@@ -12,6 +12,7 @@ import it.spaziowiki.fatturazione.form.ImportoMeseForm;
 import it.spaziowiki.fatturazione.form.PairDto;
 import it.spaziowiki.fatturazione.form.TotaleAttivitaForm;
 import it.spaziowiki.fatturazione.form.TotaleFattureForm;
+import it.spaziowiki.fatturazione.form.TotaliForm;
 
 public interface IFatturaService {
 
@@ -50,4 +51,6 @@ public interface IFatturaService {
 	TotaleAttivitaForm aggiornaImportoNettoByAttivita(Integer idFattura);
 	
 	String getNomeFileFattura(Integer idFattura);
+	
+	List<TotaliForm> findAllPagate();
 }

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import it.spaziowiki.fatturazione.entities.Fattura;
+import it.spaziowiki.fatturazione.entities.StatoFattura;
 import it.spaziowiki.fatturazione.entities.TipoFattura;
 
 @Repository
@@ -17,6 +18,8 @@ public interface FatturaRepository extends JpaRepository<Fattura, Integer> {
 	List<Fattura> findByClienteIdClienteAndTipoFattura(Integer idCliente, TipoFattura tipoFattura);
 	
 	List<Fattura> findByTipoFattura(TipoFattura tipoFattura);
+	
+	List<Fattura> findByTipoFatturaAndStatoFattura(TipoFattura tipoFattura,StatoFattura statoFattura);
 	
 	@Query("SELECT max(f.idFattura) FROM Fattura f")
 	Integer getMaxIdFattura();

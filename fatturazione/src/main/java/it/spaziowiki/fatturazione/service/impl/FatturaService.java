@@ -40,8 +40,10 @@ import it.spaziowiki.fatturazione.form.ImportoMeseForm;
 import it.spaziowiki.fatturazione.form.PairDto;
 import it.spaziowiki.fatturazione.form.TotaleAttivitaForm;
 import it.spaziowiki.fatturazione.form.TotaleFattureForm;
+import it.spaziowiki.fatturazione.form.TotaliForm;
 import it.spaziowiki.fatturazione.form.factory.BozzaFormFactory;
 import it.spaziowiki.fatturazione.form.factory.FatturaFormFactory;
+import it.spaziowiki.fatturazione.form.factory.TotaliFormFactory;
 import it.spaziowiki.fatturazione.repository.AttivitaRepository;
 import it.spaziowiki.fatturazione.repository.CMeseRepository;
 import it.spaziowiki.fatturazione.repository.ClienteRepository;
@@ -84,6 +86,36 @@ public class FatturaService implements IFatturaService {
 	
 	@Value("${iva_default}")
 	private BigDecimal ivaDefault;
+	
+	@Autowired
+	private TotaliFormFactory totaliFormFactory;
+	
+	
+	@Override
+	public List<TotaliForm> findAllPagate(){
+		TipoFattura tipoFattura = new TipoFattura();
+		tipoFattura.setCod(TipoFatturaEnum.FATTURA.getCod());
+		StatoFattura statoFattura= new StatoFattura();
+		statoFattura.setCod(StatoFatturaEnum.PAGATA.getCod());
+		List<Fattura>listaFatture=fatturaRepository.findByTipoFatturaAndStatoFattura(tipoFattura, statoFattura);
+		tipoFattura = new TipoFattura();
+		tipoFattura.setCod(TipoFatturaEnum.BLACK.getCod());
+		List<Fattura>listaBlack=fatturaRepository.findByTipoFatturaAndStatoFattura(tipoFattura, statoFattura);
+		List<TotaliForm> listaFattureForm=totaliFormFactory.getList(listaFatture);
+		List<TotaliForm> listaBlackForm=totaliFormFactory.getList(listaBlack);
+		List<TotaliForm> toRet= new ArrayList<>();
+		toRet.addAll(listaBlackForm);
+		toRet.addAll(listaFattureForm);
+		toRet.sort(new Comparator<TotaliForm>() {
+
+			@Override
+			public int compare(TotaliForm o1, TotaliForm o2) {
+				return o1.getIdFattura().compareTo(o2.getIdFattura());
+			}
+		});
+		
+		return toRet;
+	}
 	
 	@Override
 	public List<FatturaForm> getAllFattureCliente(Integer idCliente,String codTipoFattura){

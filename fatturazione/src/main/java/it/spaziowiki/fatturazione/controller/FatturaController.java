@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import it.spaziowiki.fatturazione.entities.Fattura;
 import it.spaziowiki.fatturazione.enums.StatoFatturaEnum;
 import it.spaziowiki.fatturazione.enums.TipoFatturaEnum;
 import it.spaziowiki.fatturazione.exception.FatturaDeleteException;

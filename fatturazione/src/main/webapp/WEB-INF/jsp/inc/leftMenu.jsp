@@ -18,7 +18,20 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Home</span></a>
       </li>
-
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+	<!-- Heading -->
+      <div class="sidebar-heading">
+        Totali
+      </div>
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="<c:url value='/totali' />">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Totali</span></a>
+      </li>
+      
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
