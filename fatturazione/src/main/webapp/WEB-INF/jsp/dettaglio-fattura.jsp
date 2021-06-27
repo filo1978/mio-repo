@@ -12,8 +12,15 @@
     	 initDate();
     	 initNumber();
     	 gestisciDatiFattura( $('#codTipo').val());
+    	 gestisciDatiPagamento($('#codStato').val());
     	 
           
+    	 $('#codStato').on('change', function() {
+    		 var codStatoSelezionato = $(this).val(); 
+    		 console.log("codStatoSelezionato="+codStatoSelezionato);
+    		 gestisciDatiPagamento(codStatoSelezionato);
+    	 });
+    	 
     	 $('#codTipo').on('change', function() {
           	 var codTipoSelezionato = $(this).val(); 
              console.log("codTipoSelezionato="+codTipoSelezionato);
@@ -144,7 +151,17 @@
 		$("#form-to-dettaglio-cliente" ).submit();					
 	}
      
-     
+     function gestisciDatiPagamento(codStato){
+    	 console.log("codStato="+codStato);
+    	 if(codStato=='ST01'){
+    		 //Se pagata
+    		 $("#dataPagamentoDiv").show();
+    		 $("#datiPagamentoDiv").show();
+    	 }else{
+    		 $("#dataPagamentoDiv").hide();
+    		 $("#datiPagamentoDiv").hide();
+    	 }
+    }
      
      function gestisciDatiFattura(codTipo){
     	 console.log("codTipo="+codTipo);
@@ -265,7 +282,7 @@
 				 
 				 <div class="form-group">
 				  
-				   <form:label path = "codTipo">Cliente</form:label>
+				   <form:label path = "idCliente">Cliente</form:label>
 				  
 				  	<form:select required="true" class="form-control" path="idCliente" >
 				  		<form:option value=""></form:option>
@@ -313,6 +330,17 @@
 					  		<form:options items="${listaStatiFattura}"  itemValue="cod" itemLabel="descrizione" />
 						</form:select>
 				 	</div>
+				 	<div class="form-group" id="dataPagamentoDiv">
+					 	<form:label path="dataPagamento">Data pagamento</form:label>
+					    <form:input path="dataPagamento" type="text" class="form-control date" id="dataPagamento" aria-describedby="dataPagamentoHelp" placeholder="Data pagamento" />
+					    <form:errors path="dataPagamento" cssClass="error forceInline"/>
+				 	</div>
+				 	<div class="form-group" id="datiPagamentoDiv">
+				 		<form:label path="datiPagamento">Dati Pagamento</form:label>
+					    <form:textarea path="datiPagamento" type="text" class="form-control" id="datiPagamento" aria-describedby="datiPagamentoHelp" placeholder="Dati pagamento" />
+					    <form:errors path="datiPagamento" cssClass="error forceInline"/>
+				 	</div>
+				 	
 				  
 				  <div class="form-group" id="imponibileDiv">
 					  <div class="form-group">

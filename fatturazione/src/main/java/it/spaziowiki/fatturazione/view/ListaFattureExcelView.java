@@ -22,7 +22,7 @@ public class ListaFattureExcelView extends AbstractExcelListView {
 	@Override
 	protected List<String> getHeaders() {
 		return Arrays.asList("Anno", "Nr. fattura","Data fattura", "Cliente","P.IVA Cliente",
-				"Importo lordo", "IVA", "Bollo", "Stato");
+				"Importo lordo", "IVA", "Bollo", "Stato","Data pagamento","Dati pagamento");
 	}
 
 	@Override
@@ -50,6 +50,10 @@ public class ListaFattureExcelView extends AbstractExcelListView {
 			excelSheet.autoSizeColumn(7);
 			getCell(8,excelRow,cellStyle).setCellValue(f.getDescrStato());
 			excelSheet.autoSizeColumn(8);
+			getCell(9,excelRow,cellStyle).setCellValue(f.getDataPagamento());
+			excelSheet.autoSizeColumn(9);
+			getCell(10,excelRow,cellStyle).setCellValue(f.getDatiPagamento());
+			excelSheet.autoSizeColumn(10);
 		}
 	}
 

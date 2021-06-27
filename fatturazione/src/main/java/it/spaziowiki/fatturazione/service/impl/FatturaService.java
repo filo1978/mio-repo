@@ -159,6 +159,15 @@ public class FatturaService implements IFatturaService {
 			fattura.setIva(ivaDefault);
 			fattura.setImportoNetto(new BigDecimal(0));
 		}
+		if(StringUtils.hasText(fatturaForm.getDataPagamento())){
+			try {
+				fattura.setDataPagamento(new SimpleDateFormat("dd/MM/yyyy").parse(fatturaForm.getDataPagamento()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		fattura.setDatiPagamento(fatturaForm.getDatiPagamento());
 		fatturaRepository.save(fattura);
 		return fattura.getIdFattura();
 	}
@@ -294,6 +303,17 @@ public class FatturaService implements IFatturaService {
 			fattura.setTipoFattura(tipoFatturaRepository.findById(fatturaForm.getCodTipo()).get());
 			fattura.setNumeroFattura(getNumeroFattura(cliente,fattura));
 			
+		}
+		fattura.setDatiPagamento(fatturaForm.getDatiPagamento());
+		if(StringUtils.hasText(fatturaForm.getDataPagamento())) {
+			try {
+				fattura.setDataPagamento(new SimpleDateFormat("dd/MM/yyyy").parse(fatturaForm.getDataPagamento()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			fattura.setDataPagamento(null);
 		}
 		fatturaRepository.save(fattura);
 	}

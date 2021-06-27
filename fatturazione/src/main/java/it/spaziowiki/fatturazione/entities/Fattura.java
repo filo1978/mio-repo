@@ -69,6 +69,13 @@ public class Fattura implements Serializable , Cloneable {
 	@ManyToOne
 	@JoinColumn(name="cod_mese")
 	private CMese mese;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="data_pagamento")
+	private Date dataPagamento;
+	
+	@Column(name="dati_pagamento")
+	private String datiPagamento;
 
 	public Fattura() {
 	}
@@ -182,6 +189,22 @@ public class Fattura implements Serializable , Cloneable {
 
 	public void setMese(CMese mese) {
 		this.mese = mese;
+	}
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public String getDatiPagamento() {
+		return datiPagamento;
+	}
+
+	public void setDatiPagamento(String datiPagamento) {
+		this.datiPagamento = datiPagamento;
 	}
 
 	public Fattura clone() {

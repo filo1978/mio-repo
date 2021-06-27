@@ -29,6 +29,8 @@ public class FatturaForm extends AbstractForm {
 	private String pivaCiente;
 	private String codMese;
 	private String descrMese;
+	private String dataPagamento;
+	private String datiPagamento;
 
 	public Integer getIdFattura() {
 		return idFattura;
@@ -178,4 +180,21 @@ public class FatturaForm extends AbstractForm {
 		this.descrMese = descrMese;
 	}
 
+	public String getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(String dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public String getDatiPagamento() {
+		return datiPagamento;
+	}
+
+	public void setDatiPagamento(String datiPagamento) {
+		this.datiPagamento = datiPagamento;
+	}
+
+	
 }

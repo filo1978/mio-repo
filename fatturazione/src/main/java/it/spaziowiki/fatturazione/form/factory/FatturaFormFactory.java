@@ -47,6 +47,10 @@ public class FatturaFormFactory extends AbstractFormFactory<Fattura, FatturaForm
 			fatturaForm.setCodMese(fattura.getMese().getCod());
 			fatturaForm.setDescrMese(fattura.getMese().getDescrizione());
 		}
+		if(fattura.getDataPagamento()!=null) {
+			fatturaForm.setDataPagamento(formatter.format(fattura.getDataPagamento()));
+		}
+		fatturaForm.setDatiPagamento(fattura.getDatiPagamento());
 		return fatturaForm;
 	}
 
