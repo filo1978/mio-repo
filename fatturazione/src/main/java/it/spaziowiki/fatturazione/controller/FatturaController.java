@@ -1,6 +1,5 @@
 package it.spaziowiki.fatturazione.controller;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.List;
