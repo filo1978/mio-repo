@@ -162,7 +162,7 @@ COM.COD_PROV=PROV.COD_PROV]]>
 	</pageHeader>
 	<detail>
 		<band height="80" splitType="Stretch">
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="2" y="23" width="565" height="20" uuid="d73160af-1967-4828-9a1e-7c0cb5e92041"/>
 				<textElement>
 					<font fontName="DejaVu Sans"/>
@@ -199,21 +199,21 @@ COM.COD_PROV=PROV.COD_PROV]]>
 				<text><![CDATA[Imponibile]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="28" width="50" height="20" uuid="fce1442e-c757-4943-ae22-a95fe08eb211"/>
+				<reportElement positionType="Float" x="0" y="28" width="58" height="20" uuid="fce1442e-c757-4943-ae22-a95fe08eb211"/>
 				<textElement textAlignment="Left">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<text><![CDATA[Contributo]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="50" y="28" width="20" height="20" uuid="988a7d53-769f-4be1-bc80-1ae691bcf237"/>
+				<reportElement positionType="Float" x="59" y="28" width="20" height="20" uuid="988a7d53-769f-4be1-bc80-1ae691bcf237"/>
 				<textElement>
 					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{iva_fattura}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="70" y="28" width="30" height="20" uuid="4f81f3d2-02f7-4fe7-931f-5dc731ef1a5d"/>
+				<reportElement positionType="Float" x="79" y="28" width="30" height="20" uuid="4f81f3d2-02f7-4fe7-931f-5dc731ef1a5d"/>
 				<textElement textAlignment="Left">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -243,7 +243,7 @@ Prestazione non soggetta a ritenuta d'acconto secondo quanto previsto dal punto 
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[euro]]></text>
+				<text><![CDATA[€]]></text>
 			</staticText>
 			<textField>
 				<reportElement positionType="Float" x="270" y="48" width="100" height="20" uuid="1d8ef767-4191-4219-a165-32b7ea293f20"/>
@@ -264,14 +264,14 @@ Prestazione non soggetta a ritenuta d'acconto secondo quanto previsto dal punto 
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[euro]]></text>
+				<text><![CDATA[€]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="230" y="8" width="40" height="21" uuid="dc8d73ee-da42-42a7-a680-9ba0b2f2bad7"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<text><![CDATA[euro]]></text>
+				<text><![CDATA[€]]></text>
 			</staticText>
 			<textField>
 				<reportElement positionType="Float" x="270" y="8" width="100" height="21" uuid="6bf21413-7054-4d48-b3d1-6370036eea95"/>

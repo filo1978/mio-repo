@@ -101,7 +101,7 @@ public class FatturaController extends SmartAbstractController{
 	
 	
 	@RequestMapping(value = "/stampa-fattura", method = RequestMethod.GET)
-	public void stampa(HttpServletResponse response) throws IOException {
+	public void stampa(HttpServletResponse response)  {
 
 		JasperPrint jasperPrint = null;
 
